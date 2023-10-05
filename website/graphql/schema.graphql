@@ -1,0 +1,128 @@
+type Admin {
+	id: ID! @id
+  userName: String
+  email: String!
+  password: String! @writeonly
+}
+
+type Interviewer {
+  interviewerId: ID! @id
+  userName: String
+  email: String!
+  admin: String @writeonly
+  role: String
+  image: String
+  password: String! @writeonly
+  skillset: [String]
+  status: InterviewerStatus
+  interviewList: [Interview!]! @relationship(type: "Interview", direction: OUT)
+}
+
+type Interview {
+  interviewId: ID! @id
+  timeStart: DateTime
+  timeEnd: DateTime
+  duration: Float
+  admin: String @writeonly
+  description: String
+  releventLinks: [String]
+
+  feedback: [Feedback!]! @relationship(type: "Interview", direction: IN)
+  interviewer: Interviewer @relationship(type: "Interview", direction: IN)
+  candidate: Candidate! @relationship(type: "Interview", direction: IN)
+}
+
+type Candidate {
+  candidateId: ID! @id
+  name: String!
+  college: String
+  degree: String
+  email: String!
+  admin: String @writeonly
+  telegramId: String!
+  cgpa: String
+  track: String!
+  skillset: [String] 
+  interviewStatus: CandidateStatus
+  interviewList: [Interview!]! @relationship(type: "Interview", direction: OUT)
+}
+
+type Feedback {
+  confidence: Boolean!
+  spokenSkills: Boolean!
+  technicalSkills: Boolean!
+  problemSolving: Boolean!
+  teamwork: Boolean!
+  feedbackResponse: String!
+  feedbackDescription: String
+  interviewList: [Interview!]! @relationship(type: "Interview", direction: OUT)
+}
+
+extend type Interviewer 
+	@auth(
+	rules:[{
+		operations: [DELETE,UPDATE,CONNECT,DISCONNECT]
+		allow: {
+			admin:"$jwt.id"
+		}
+	},
+	{
+		operations: [CREATE]
+		isAuthenticated: true
+	}]
+)
+
+extend type Interview
+	@auth(
+	rules:[{
+		operations: [DELETE,CONNECT,DISCONNECT]
+		allow: { OR: [{ admin: "$jwt.id" }, { interviewer: { interviewerId: "$jwt.id" }} ] }
+	},
+	{
+		operations: [CREATE]
+		isAuthenticated: true
+	}]
+)
+
+extend type Candidate 
+	@auth(
+	rules:[{
+		operations: [DELETE,UPDATE,CONNECT,DISCONNECT]
+		allow: { OR: [{ admin: "$jwt.id" }, { interviewer: { interviewerId: "$jwt.id" }} ] }
+	},
+	{
+		operations: [CREATE]
+		isAuthenticated: true
+	}]
+)
+
+extend type Feedback 
+	@auth(
+	rules:[{
+		operations: [DELETE,UPDATE,CONNECT,DISCONNECT]
+		allow: {
+			interview:{
+        interviewer:{
+          interviewerId:"$jwt.id"
+        }
+      }
+		}
+	},
+	{
+		operations: [CREATE]
+		isAuthenticated: true
+	}]
+)
+
+enum InterviewerStatus{
+  WAITING
+  AVAILABLE
+  ININTERVIEW
+}
+
+enum CandidateStatus{
+  TOBEINTERVIEWED
+  ONGOING
+  REJECTED
+  SELECTED
+}
