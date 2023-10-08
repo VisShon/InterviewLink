@@ -1,0 +1,24 @@
+mutation Mutation($input: [CandidateCreateInput!]!) {
+  createCandidates(input: $input) {
+    candidates {
+      candidateId
+      name
+    }
+  }
+}
+
+# {
+#   "input": [
+#     {
+#       "cgpa": null,
+#       "degree": null,
+#       "college": null,
+#       "email": null,
+#       "interviewStatus": null,
+#       "name": null,
+#       "skillset": null,
+#       "telegramId": null,
+#       "track": null
+#     }
+#   ]
+# }

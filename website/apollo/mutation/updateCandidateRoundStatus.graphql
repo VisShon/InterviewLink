@@ -1,0 +1,10 @@
+mutation UpdateCandidateRoundStatus($where: InterviewWhere, $update: InterviewUpdateInput) {
+  updateInterviews(where: $where, update: $update) {
+    interviews {
+      candidate {
+        track
+        interviewStatus
+      }
+    }
+  }
+}

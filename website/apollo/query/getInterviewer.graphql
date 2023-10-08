@@ -1,0 +1,25 @@
+query GetInterviewer($where: InterviewerWhere) {
+  interviewers(where: $where) {
+    email
+    image
+    role
+    skillset
+    status
+    userName
+    interviewList {
+      interviewId
+      candidate {
+        track
+        name
+        email
+        degree
+        college
+        interviewStatus
+        cgpa
+        candidateId
+      }
+      timeEnd
+      timeStart
+    }
+  }
+}

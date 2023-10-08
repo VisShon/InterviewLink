@@ -1,0 +1,9 @@
+mutation UpdateCandidateStatus($where: InterviewWhere, $update: InterviewUpdateInput) {
+  updateInterviews(where: $where, update: $update) {
+    interviews {
+      candidate {
+        interviewStatus
+      }
+    }
+  }
+}

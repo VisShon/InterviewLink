@@ -1,0 +1,7 @@
+mutation UpdateInterviewers($where: InterviewerWhere, $update: InterviewerUpdateInput) {
+  updateInterviewers(where: $where, update: $update) {
+    interviewers {
+      status
+    }
+  }
+}

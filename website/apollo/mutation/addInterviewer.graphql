@@ -1,0 +1,22 @@
+mutation Mutation($input: [InterviewerCreateInput!]!) {
+  createInterviewers(input: $input) {
+    interviewers {
+      interviewerId
+      userName
+    }
+  }
+}
+
+
+# {
+#   "input": [
+#     {
+#       "email": "",
+#       "password": "",
+#       "role": "",
+#       "skillset": [],
+#       "status": "AVAILABLE",
+#       "userName":""
+#     }
+#   ]
+# }

@@ -1,0 +1,14 @@
+query getCandidates($where: CandidateWhere) {
+  candidates(where: $where) {
+    candidateId
+    cgpa
+    college
+    email
+    degree
+    name
+    interviewStatus
+    skillset
+    telegramId
+    track
+  }
+}

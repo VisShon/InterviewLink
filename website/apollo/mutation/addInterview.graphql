@@ -1,0 +1,39 @@
+mutation CreateInterviews($input: [InterviewCreateInput!]!) {
+  createInterviews(input: $input) {
+    interviews {
+      interviewId
+      timeEnd
+      timeStart
+    }
+  }
+}
+
+# {
+#   "input": [
+#     {
+#       "description": null,
+#       "duration": null,
+#       "interviewer": {
+#         "connect": {
+#           "where": {
+#             "node": {
+#               "interviewerId": null
+#             }
+#           }
+#         }
+#       },
+#       "releventLinks": null,
+#       "timeEnd": null,
+#       "timeStart": null,
+#       "candidate": {
+#         "connect": {
+#           "where": {
+#             "node": {
+#               "candidateId": null
+#             }
+#           }
+#         }
+#       }
+#     }
+#   ]
+# }

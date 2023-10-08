@@ -1,0 +1,7 @@
+mutation AddFeeback($create: InterviewRelationInput) {
+  updateInterviews(create: $create) {
+    interviews {
+      interviewId
+    }
+  }
+}
