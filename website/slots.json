@@ -1,0 +1,194 @@
+[
+    {
+      "id":1,
+      "interviewerId": "96c30f03-774d-48aa-b5a4-693107594b16",
+      "timestart": "06:47 A.M.",
+      "timeend": "07:47 A.M.",
+      "day":"Monday",
+      "interviewerStatus": "Available"
+    },
+    {
+      "id":2,
+      "interviewerId": "96c30f03-774d-48aa-b5a4-693107594b16",
+      "timestart": "05:29 A.M.",
+      "timeend": "06:29 A.M.",
+      "day":"Monday",
+      "interviewerStatus": "Available"
+    },
+    {
+      "id":3,
+      "interviewerId": "96c30f03-774d-48aa-b5a4-693107594b16",
+      "timestart": "07:18 A.M.",
+      "timeend": "08:18 A.M.",
+      "day":"Monday",
+      "interviewerStatus": "Available"
+    },
+    {
+      "id":4,
+      "interviewerId": "96c30f03-774d-48aa-b5a4-693107594b16",
+      "timestart": "09:05 P.M.",
+      "timeend": "10:05 P.M.",
+      "day":"Monday",
+      "interviewerStatus": "Available"
+    },
+    {
+      "id":5,
+      "interviewerId": "96c30f03-774d-48aa-b5a4-693107594b16",
+      "timestart": "02:27 P.M.",
+      "timeend": "03:27 P.M.",
+      "day":"Monday",
+      "interviewerStatus": "Available"
+    },
+    {
+      "id":6,
+      "interviewerId": "96c30f03-774d-48aa-b5a4-693107594b16",
+      "timestart": "12:55 A.M.",
+      "timeend": "01:55 P.M.",
+      "day":"Monday",
+      "interviewerStatus": "Available"
+    },
+    {
+      "id":7,
+      "interviewerId": "d098edac-3b5a-4ec4-bdfd-f1c3b2c8e9f1",
+      "timestart": "04:36 P.M.",
+      "timeend": "05:36 P.M.",
+      "day":"Monday",
+      "interviewerStatus": "Available"
+    },
+    {
+      "id":8,
+      "interviewerId": "d098edac-3b5a-4ec4-bdfd-f1c3b2c8e9f1",
+      "timestart": "01:02 P.M.",
+      "timeend": "02:02 P.M.",
+      "day":"Monday",
+      "interviewerStatus": "Available"
+    },
+    {
+      "id":9,
+      "interviewerId": "d098edac-3b5a-4ec4-bdfd-f1c3b2c8e9f1",
+      "timestart": "05:22 P.M.",
+      "timeend": "06:22 P.M.",
+      "day":"Monday",
+      "interviewerStatus": "Available"
+    },
+    {
+      "id":10,
+      "interviewerId": "d098edac-3b5a-4ec4-bdfd-f1c3b2c8e9f1",
+      "timestart": "09:38 P.M.",
+      "timeend": "10:38 P.M.",
+      "day":"Monday",
+      "interviewerStatus": "Available"
+    },
+    {
+      "id":11,
+        "interviewerId": "b7452a30-2b21-44f5-aac6-9ae378d9bd03",
+        "timestart": "12:19 P.M.",
+        "timeend": "01:19 A.M.",
+        "day":"Monday",
+        "interviewerStatus": "Available"
+      },
+      {
+        "id":12,
+        "interviewerId": "b7452a30-2b21-44f5-aac6-9ae378d9bd03",
+        "timestart": "07:23 P.M.",
+        "timeend": "08:23 P.M.",
+        "day":"Monday",
+        "interviewerStatus": "Available"
+      },
+      {
+        "id":13,
+        "interviewerId": "b7452a30-2b21-44f5-aac6-9ae378d9bd03",
+        "timestart": "03:33 P.M.",
+        "timeend": "04:33 P.M.",
+        "day":"Monday",
+        "interviewerStatus": "Available"
+      },
+      {
+        "id":14,
+        "interviewerId": "b7452a30-2b21-44f5-aac6-9ae378d9bd03",
+        "timestart": "09:21 P.M.",
+        "timeend": "10:21 P.M.",
+        "day":"Monday",
+        "interviewerStatus": "Available"
+      },
+      {
+        "id":15,
+        "interviewerId": "b7452a30-2b21-44f5-aac6-9ae378d9bd03",
+        "timestart": "06:28 P.M.",
+        "timeend": "07:28 P.M.",
+        "day":"Monday",
+        "interviewerStatus": "Available"
+      },
+      {
+        "id":16,
+        "interviewerId": "b7452a30-2b21-44f5-aac6-9ae378d9bd03",
+        "timestart": "09:22 P.M.",
+        "timeend": "10:22 P.M.",
+        "day":"Monday",
+        "interviewerStatus": "Available"
+      },
+      {
+        "id":17,
+        "interviewerId": "46a29091-9434-40a4-badf-abaecc742f0c",
+        "timestart": "05:26 P.M.",
+        "timeend": "06:26 P.M.",
+        "day":"Monday",
+        "interviewerStatus": "Available"
+      },
+      {
+        "id":18,
+        "interviewerId": "46a29091-9434-40a4-badf-abaecc742f0c",
+        "timestart": "03:09 A.M.",
+        "timeend": "04:09 A.M.",
+        "day":"Monday",
+        "interviewerStatus": "Available"
+      },
+      {
+        "id":19,
+        "interviewerId": "46a29091-9434-40a4-badf-abaecc742f0c",
+        "timestart": "03:06 P.M.",
+        "timeend": "04:06 P.M.",
+        "day":"Monday",
+        "interviewerStatus": "Available"
+      },
+      {
+        "id":20,
+        "interviewerId": "46a29091-9434-40a4-badf-abaecc742f0c",
+        "timestart": "10:08 P.M.",
+        "timeend": "11:08 P.M.",
+        "day":"Monday",
+        "interviewerStatus": "Available"
+      },
+      {
+        "id":21,
+        "interviewerId": "46a29091-9434-40a4-badf-abaecc742f0c",
+        "timestart": "12:24 A.M.",
+        "timeend": "01:24 P.M.",
+        "day":"Monday",
+        "interviewerStatus": "Available"
+      },
+      {
+        "id":22,
+        "interviewerId": "46a29091-9434-40a4-badf-abaecc742f0c",
+        "timestart": "01:20 A.M.",
+        "timeend": "02:20 A.M.",
+        "day":"Monday",
+        "interviewerStatus": "Available"
+      },
+      {
+        "id":23,
+        "interviewerId": "46a29091-9434-40a4-badf-abaecc742f0c",
+        "timestart": "09:11 A.M.",
+        "timeend": "10:11 A.M.",
+        "day":"Monday",
+        "interviewerStatus": "Available"
+      },
+      {
+        "id":24,
+        "interviewerId": "46a29091-9434-40a4-badf-abaecc742f0c",
+        "timestart": "01:39 A.M.",
+        "timeend": "02:39 A.M.",
+        "day":"Monday",
+        "interviewerStatus": "Available"
+      }
+]
