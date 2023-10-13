@@ -50,3 +50,8 @@ def facts(message):
     ]
     random_index = random.randint(0, len(fun_facts) - 1)
     bot.reply_to(message, fun_facts[random_index])
+
+@bot.message_handler(["info"])
+def info(message):
+    user_id = str(message.from_user.id)
+    bot.reply_to(message, user_id)
