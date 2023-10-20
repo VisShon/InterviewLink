@@ -93,3 +93,19 @@ def get_schedule(message):
     for key, value in data_dict.items():
         if str(value) == user_id:
             bot.reply_to(message, "Start time : "+data["time_start"]+"\nEnd time : " +data["time_end"]) 
+
+
+@bot.message_handler(["interviewer"])
+def get_interviewer_details(message):
+    user_id = str(message.from_user.id)
+    # create the data object and fill it with response data from API
+    api_url = 'http://localhost:3000/api/botUpdate?telegram_id=1433866671'
+    response = requests.get(api_url)
+    data = response.json()
+    data_dict = dict(data)
+    for key, value in data_dict.items():
+        if str(value) == user_id:
+            bot.reply_to(message, "Your Interviewer's name : "+data["interviewer_userName"]+"\nEMail id : " +data["interviewer_email"])          
+
+
+bot.polling()
