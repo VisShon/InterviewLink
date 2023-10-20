@@ -55,3 +55,41 @@ def facts(message):
 def info(message):
     user_id = str(message.from_user.id)
     bot.reply_to(message, user_id)
+
+@bot.message_handler(["track"])
+def get_track(message):
+    user_id = str(message.from_user.id)
+    # create the data object and fill it with response data from API
+    api_url = 'http://localhost:3000/api/botUpdate?telegram_id=1433866671'
+    response = requests.get(api_url)
+    data = response.json()
+    data_dict = dict(data)
+    for key, value in data_dict.items():
+        if str(value) == user_id:
+            bot.reply_to(message, "Your selected track for the interview: " + data["track"])  
+
+
+@bot.message_handler(["status"])
+def get_status(message):
+    user_id = str(message.from_user.id)
+    # create the data object and fill it with response data from API
+    api_url = 'http://localhost:3000/api/botUpdate?telegram_id=1433866671'
+    response = requests.get(api_url)
+    data = response.json() 
+    data_dict = dict(data)
+    for key, value in data_dict.items():
+        if str(value) == user_id:
+            bot.reply_to(message, "Your status: " + data["interview_status"]) 
+
+
+@bot.message_handler(["schedule"])
+def get_schedule(message):
+    user_id = str(message.from_user.id)
+    # create the data object and fill it with response data from API
+    api_url = 'http://localhost:3000/api/botUpdate?telegram_id=1433866671'
+    response = requests.get(api_url)
+    data = response.json() 
+    data_dict = dict(data)
+    for key, value in data_dict.items():
+        if str(value) == user_id:
+            bot.reply_to(message, "Start time : "+data["time_start"]+"\nEnd time : " +data["time_end"]) 
