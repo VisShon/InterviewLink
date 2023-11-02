@@ -105,7 +105,13 @@ def get_interviewer_details(message):
     data_dict = dict(data)
     for key, value in data_dict.items():
         if str(value) == user_id:
-            bot.reply_to(message, "Your Interviewer's name : "+data["interviewer_userName"]+"\nEMail id : " +data["interviewer_email"])          
+            bot.reply_to(message, "Your Interviewer's name : "+data["interviewer_userName"]+"\nEMail id : " +data["interviewer_email"])      
+
+@bot.message_handler(func=lambda message: True)
+def handle_text(message):
+    user_message = message.text
+    # You can now use the 'user_message' variable to access the text of the user's message
+    bot.send_message(message.chat.id, f"You said: {user_message}")
 
 
 bot.polling()
