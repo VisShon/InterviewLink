@@ -60,7 +60,7 @@ def info(message):
 def get_track(message):
     user_id = str(message.from_user.id)
     # create the data object and fill it with response data from API
-    api_url = 'http://localhost:3000/api/botUpdate?telegram_id=1433866671'
+    api_url = 'http://localhost:3000/api/botUpdate?telegram_id=836114955'
     response = requests.get(api_url)
     data = response.json()
     data_dict = dict(data)
@@ -73,7 +73,7 @@ def get_track(message):
 def get_status(message):
     user_id = str(message.from_user.id)
     # create the data object and fill it with response data from API
-    api_url = 'http://localhost:3000/api/botUpdate?telegram_id=1433866671'
+    api_url = 'http://localhost:3000/api/botUpdate?telegram_id=836114955'
     response = requests.get(api_url)
     data = response.json() 
     data_dict = dict(data)
@@ -86,7 +86,7 @@ def get_status(message):
 def get_schedule(message):
     user_id = str(message.from_user.id)
     # create the data object and fill it with response data from API
-    api_url = 'http://localhost:3000/api/botUpdate?telegram_id=1433866671'
+    api_url = 'http://localhost:3000/api/botUpdate?telegram_id=836114955'
     response = requests.get(api_url)
     data = response.json() 
     data_dict = dict(data)
@@ -99,7 +99,7 @@ def get_schedule(message):
 def get_interviewer_details(message):
     user_id = str(message.from_user.id)
     # create the data object and fill it with response data from API
-    api_url = 'http://localhost:3000/api/botUpdate?telegram_id=1433866671'
+    api_url = 'http://localhost:3000/api/botUpdate?telegram_id=836114955'
     response = requests.get(api_url)
     data = response.json()
     data_dict = dict(data)
