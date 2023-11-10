@@ -17,6 +17,8 @@ def start(message):
     user_last_name = str(message.from_user.last_name)
     bot.reply_to(message,"Welcome to the MathWorks Interview Process " + user_first_name + " " + user_last_name +
                  " Hi I will be your buddy throughout this interview process.")
+    
+
 
 
 @bot.message_handler(["help"])
@@ -47,7 +49,7 @@ def facts(message):
         "Toolboxes and Add-Ons: MathWorks offers a wide range of toolboxes and add-ons that extend the capabilities of MATLAB and Simulink. These toolboxes cover various domains, such as image processing, control systems, optimization, machine learning, and more.",
         "Continuous Development: MathWorks continues to enhance its software offerings by regularly releasing updates and new versions. These updates introduce new features, performance improvements, and bug fixes to meet the evolving needs of its users.",
         "Commitment to Education: MathWorks is committed to promoting STEM education and offers resources, competitions, and initiatives to encourage students interest in mathematics, engineering, and scientific computing.",
-    ]
+    ]1466066859
     random_index = random.randint(0, len(fun_facts) - 1)
     bot.reply_to(message, fun_facts[random_index])
 
