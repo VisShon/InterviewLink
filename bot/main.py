@@ -110,7 +110,6 @@ def get_interviewer_details(message):
 @bot.message_handler(func=lambda message: True)
 def handle_text(message):
     user_message = message.text
-    # You can now use the 'user_message' variable to access the text of the user's message
     bot.send_message(message.chat.id, f"You said: {user_message}")
 
 

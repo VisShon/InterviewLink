@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "sdos-project-404807",
+  "private_key_id": "f914c6db5a268086fd317d49df6c86016f325c73",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCNoDrTlcqfMq5T\nXh3Up5BwiMIFosP2jW8Fur5rIn+hzyxIQvl9RdQBDo6gi9/EBVIzAmZ3o8qmhVSR\n7hktp+DizcyUKuROFzn1AHnLa40TIchDMM96Vtt12sCLG7w0Jh8B9i5A8dL5g49g\nePaMm4pXDjdWvB1mJAek3SEsQBNQ+8fxJVLIQd1H1esJnYz8toppGHBZg6WW1MNY\nPDgZkItn8IN8EsUN7ZLsfKgDH0QReEjiMJiy8dXQ8Neo5PdAnSQ5We3bSnwv82XM\ngvCqnGkq9X3n58kUWUm3tWPg8+50uJucsJG7zcAkwBaijuj5af9X0XfPJ6tG4VrO\noz8AFNgnAgMBAAECggEAAwNsL0pRDO70sk7VoRTXETTDJBKzOP51rdli6dITqf2Q\n6BFF4oyd8k89IDiC0HsNEx2hPoIlhPk7RmuapB0Lmp6mpq/YFk1Fo/2YdT8j3krF\nk6Bo9SXZ9mdGbBPe2kXF8bJP9eqmJz3NgeIetx2+ZV05EjTxmFXDoiiFMFCOavHz\n0uAxcguN1TQUtgs7dAWEp65vRRncb2mTCklKvLEX3BzBdQBCGCzVP1UTmfhKdK/p\nOkQEBPRfitX8bOenmNVL4UiPX8rcFkRATGsUfcQgT5d2GCLmdkIZlEkg7rWGVQVF\ncNMlS/Pqqut7GM2tvv19LTIDbqInqRObGfXyfVldCQKBgQDFBqkMSaSluMRDkqdg\n1qlycmPnir2g5x0TfhM2Mqr+AOupCgKKk0Bn3jmZT1hFvlX4b5I0SbqPXYFXlsKM\nGo+N+E09hcUYepqXHMXq6m7Qlr890s6gBRByT8GrnQ/dQiZPdvxV2LHKAacNyy+1\nwkSH79C3ext3zMbFVC2QYrNd8wKBgQC4BHkfIwe4Zz8K0LGnyajIbv2+DgIwaKQe\nB8lNLQg6VKA4q7WzwEu13sIWCYhWjklvIHvuKONc8P3CUEb90wnc6FktNsQ5kJ6m\nipxBazHbWg5xdnQICYrpEIoJwWg+J7UsUQcqxOjB+codbfszgyJ/mDL917QT1MYF\nrXZBTKfF/QKBgQDCRnT+RsdxGaV9M+iTVlezIBRexbGCLSHAjLqI4KE24NV+0v36\ngoQpZzjIcTKLYskGtY0mveSVZRAau++NkssmpEYVeggEwTAZ/SczIoKub1aXsXxI\n0XWMIhTIEZEJDScViC/8vjVhCQweT9H1mV9V4ySdJ2jIUkVVYlGjY4+V/QKBgHpz\n55HTwsBwXCA7Te1EoX93dHzzX3uNNqERN2CW9eGzDMeJZCmQbhFBgdAeWc6XcsBz\nUmTiaqIfcA3NU+B2fhq1txoCVsOjvB9BH8fcqFm6bOAOHhp3FywOqHzjahXqYIJ0\nDRvl2qmyKlA5Lq9RtTRJOK14y8lijr+adZXwh7iVAoGANiDNBj8iNmYpYq/3ACuJ\nuTARVI7m0cKmDrp6tYgLptPc8iwum9Tgh061DT7B/K2NUyEV13XJcf0cyjNMiul0\nj2qJDnN8pkmC7+q/s0zaz4G/AIOO1mqVqQ+h1OZNLE9vGSWtPScnZVVv41NWGYQI\n+8tqBiwlkmmpXTZeW9+jADY=\n-----END PRIVATE KEY-----\n",
+  "client_email": "anjanay-raina@sdos-project-404807.iam.gserviceaccount.com",
+  "client_id": "117159245270320588624",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/anjanay-raina%40sdos-project-404807.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
