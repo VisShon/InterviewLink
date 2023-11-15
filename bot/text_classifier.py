@@ -101,7 +101,7 @@ input: Please tell us my track.
 
 output: Track
 
-input: When is my interview scheduled?
+input: can you help me with the commands?
 
 output:
 """,
