@@ -4,7 +4,7 @@ import requests
 import random
 import telebot
 import pandas as pd
-
+from  text_classifier import predict_text 
 Token = "6170075131:AAFnsHpB4rlkvkD7fiMseSZsHhpg_ut181c"
 
 bot = telebot.TeleBot(Token)
@@ -113,6 +113,9 @@ def get_interviewer_details(message):
 def handle_text(message):
     user_message = message.text
     bot.send_message(message.chat.id, f"You said: {user_message}")
+    bot.send_message(predict_text(user_message))
+
+
 
 
 bot.polling()
