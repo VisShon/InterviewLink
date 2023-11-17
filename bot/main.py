@@ -116,6 +116,4 @@ def handle_text(message):
     bot.send_message(predict_text(user_message))
 
 
-
-
 bot.polling()

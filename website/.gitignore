@@ -33,3 +33,5 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+sdos-project-404807-f914c6db5a26.json
+application_default_credentials.json
