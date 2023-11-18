@@ -122,6 +122,14 @@ def handle_text(message):
         get_interviewer_details(message)
     elif(response == "Schedule"):
         get_schedule(message)
+    elif(response == "Status"):
+        get_status(message)
+    elif(response == "Track"):
+        get_track(message)
+    else:
+        help(message)
+
+
 
 
 bot.polling()

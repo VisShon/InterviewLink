@@ -25,6 +25,9 @@ output: facts
 input: What is MathWorks?
 output: facts
 
+input: Tell me about the company
+output: facts
+
 input: What is my interview status?
 output: Status
 
