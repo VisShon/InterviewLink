@@ -107,7 +107,7 @@ def get_interviewer_details(message):
     data_dict = dict(data)
     for key, value in data_dict.items():
         if str(value) == user_id:
-            bot.reply_to(message, "Your Interviewer's name : "+data["interviewer_userName"]+"\nEMail id : " +data["interviewer_email"])      
+            bot.reply_to(message, "Your Interviewer's name : "+data["interviewer_userName"]+"\nEmail id : " +data["interviewer_email"])      
 
 @bot.message_handler(func=lambda message: True)
 def handle_text(message):

@@ -47,6 +47,10 @@ input: Tell me something about the company.
 
 output: Facts
 
+input: give me some facts about the company
+
+output: Facts
+
 input: Can you help me with the commands?
 
 output: Help
