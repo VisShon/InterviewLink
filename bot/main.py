@@ -49,7 +49,7 @@ def facts(message):
         "Toolboxes and Add-Ons: MathWorks offers a wide range of toolboxes and add-ons that extend the capabilities of MATLAB and Simulink. These toolboxes cover various domains, such as image processing, control systems, optimization, machine learning, and more.",
         "Continuous Development: MathWorks continues to enhance its software offerings by regularly releasing updates and new versions. These updates introduce new features, performance improvements, and bug fixes to meet the evolving needs of its users.",
         "Commitment to Education: MathWorks is committed to promoting STEM education and offers resources, competitions, and initiatives to encourage students interest in mathematics, engineering, and scientific computing.",
-    ]1466066859
+    ]
     random_index = random.randint(0, len(fun_facts) - 1)
     bot.reply_to(message, fun_facts[random_index])
 
@@ -107,13 +107,29 @@ def get_interviewer_details(message):
     data_dict = dict(data)
     for key, value in data_dict.items():
         if str(value) == user_id:
-            bot.reply_to(message, "Your Interviewer's name : "+data["interviewer_userName"]+"\nEMail id : " +data["interviewer_email"])      
+            bot.reply_to(message, "Your Interviewer's name : "+data["interviewer_userName"]+"\nEmail id : " +data["interviewer_email"])      
 
 @bot.message_handler(func=lambda message: True)
 def handle_text(message):
     user_message = message.text
-    bot.send_message(message.chat.id, f"You said: {user_message}")
-    bot.send_message(predict_text(user_message))
+    response = predict_text(str(user_message)).strip()
+    print(repr(response))
+    print("response :" , response)
+    if(response == "facts"):
+        print("called")
+        facts(message)
+    elif(response == "Interviewer"):
+        get_interviewer_details(message)
+    elif(response == "Schedule"):
+        get_schedule(message)
+    elif(response == "Status"):
+        get_status(message)
+    elif(response == "Track"):
+        get_track(message)
+    else:
+        help(message)
+
+
 
 
 bot.polling()
