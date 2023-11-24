@@ -72,7 +72,7 @@ export const logIn = async(args) =>{
 	}`
 
 	const interviewerSelectionSet = `{
-		interviewerId
+		id
 		userName
 		email
 		password
@@ -112,7 +112,7 @@ export const logIn = async(args) =>{
 			const token = jwt.sign(
 				{
 					...interviewer[0],
-					id:interviewer[0]?.interviewerId
+					id:interviewer[0]?.id
 				},
 				process.env.JWT_KEY,
 				{
@@ -140,7 +140,7 @@ export const botController = async(args) =>{
 		},
 		candidate{
 			track,
-			interviewStatus
+			status
 		}
 	}`
 
@@ -164,7 +164,7 @@ export const botController = async(args) =>{
 			time_start:startTimeFormatted,
 			time_end: endTimeFormatted,
 			track: interview[0].candidate.track,
-			interview_status: interview[0].candidate.interviewStatus,
+			interview_status: interview[0].candidate.status,
 			interviewer_userName: interview[0].interviewer.userName,
 			interviewer_email: interview[0].interviewer.email
 		}

@@ -1,6 +1,6 @@
 query GetInterviewers{
   interviewers{
-    interviewerId
+    id
     image
     role
     skillset
