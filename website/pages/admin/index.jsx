@@ -2,7 +2,6 @@ import AdminManagerToolbar from '@/components/AdminManagerToolbar'
 import CandidateSlot from '@/components/CandidateSlot'
 import FreeSlot from '@/components/FreeSlot'
 import ManagerCard from "@/components/ManagerCard"
-import Slots from '@/slots.json'
 
 import GetInterviewers from '@/apollo/query/getInterviewers.graphql'
 import GetCandidates from '@/apollo/query/getCandidates.graphql'
@@ -21,7 +20,7 @@ function admin() {
 	 const { loading:candidatesLoading, error:candidatesError, data:candidatesData }
 	 = useQuery(GetCandidates,{
 		where: {
-			interviewStatus: "TOBEINTERVIEWED"
+			status: "TOBEINTERVIEWED"
 		}
 	 })
 
@@ -43,9 +42,11 @@ function admin() {
 			nProgress.done(false)
 
 		if(managersData)
-			setSelectedManager(managersData[0].interviewerId)
+			setSelectedManager(managersData[0]?.id)
 
 	},[interviewersLoading,managersData,candidatesLoading])
+
+	
 
 	
 	return (
@@ -54,7 +55,7 @@ function admin() {
 				{managersData?.map((manager, index)=>(
 					<ManagerCard
 						key={index}
-						id={manager.interviewerId}
+						id={manager.id}
 						image={manager.image}
 						name={manager.userName}
 						role={manager.role}
@@ -64,9 +65,9 @@ function admin() {
 				))}
 			</div>
 			<div className='flex flex-col gap-10 w-[70%] px-8'>
-				<div className='w-auto h-[20vh] rounded-2xl flex gap-5 overflow-x-scroll'>
+				{/* <div className='w-auto h-[20vh] rounded-2xl flex gap-5 overflow-x-scroll'>
 					{selectedManager&&
-					Slots.filter(item=>item.interviewerId===selectedManager)
+					Slots.filter(item=>item.id===selectedManager)
 						.map((slot,index)=>(
 						<FreeSlot
 							key={index}
@@ -77,14 +78,14 @@ function admin() {
 							setSelected={setSelectedSlot}
 						/>
 					))}
-				</div>
+				</div> */}
 				<div className='w-full h-[43vh] rounded-2xl flex flex-col gap-7 overflow-y-scroll'>
 					{selectedManager&&
-						candidates?.filter(candidate=>candidate.interviewStatus=='TOBEINTERVIEWED')
+						candidates?.filter(candidate=>candidate.status=='TOBEINTERVIEWED')
 						.map((candidate,index)=>(
 							<CandidateSlot
 								key={index}
-								id={candidate.candidateId}
+								id={candidate.id}
 								name={candidate.name}
 								college={candidate.college}
 								track={candidate.track}
