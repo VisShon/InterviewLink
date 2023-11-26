@@ -1,7 +1,7 @@
 mutation CreateInterviews($input: [InterviewCreateInput!]!) {
   createInterviews(input: $input) {
     interviews {
-      interviewId
+      id
       timeEnd
       timeStart
     }

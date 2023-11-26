@@ -1,13 +1,13 @@
 query getInterview($where: InterviewWhere) {
   interviews(where: $where) {
-    interviewId
+    id
     candidate {
       track
       telegramId
       skillset
       name
       email
-      interviewStatus
+      status
       degree
       college
       cgpa
@@ -22,6 +22,6 @@ query getInterview($where: InterviewWhere) {
       problemSolving
     }
     description
-    releventLinks
+    links
   }
 }

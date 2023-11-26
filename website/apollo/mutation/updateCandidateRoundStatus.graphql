@@ -3,7 +3,7 @@ mutation UpdateCandidateRoundStatus($where: InterviewWhere, $update: InterviewUp
     interviews {
       candidate {
         track
-        interviewStatus
+        status
       }
     }
   }

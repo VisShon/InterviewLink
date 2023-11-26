@@ -21,6 +21,7 @@
     "chart.js": "^4.3.0",
     "cookie": "^0.5.0",
     "date-fns": "^2.29.3",
+    "googleapis": "^128.0.0",
     "graphql": "^16.6.0",
     "jsonwebtoken": "^9.0.0",
     "neo4j-driver": "^5.7.0",

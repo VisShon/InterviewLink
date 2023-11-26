@@ -2,7 +2,6 @@ import AdminManagerToolbar from '@/components/AdminManagerToolbar'
 import CandidateSlot from '@/components/CandidateSlot'
 import FreeSlot from '@/components/FreeSlot'
 import ManagerCard from "@/components/ManagerCard"
-import Slots from '@/slots.json'
 
 import GetInterviewers from '@/apollo/query/getInterviewers.graphql'
 import GetCandidates from '@/apollo/query/getCandidates.graphql'
@@ -12,8 +11,10 @@ import { useQuery } from '@apollo/client'
 import nProgress from 'nprogress'
 
 function admin() {
-	const [managersData, setManagersData] = useState()
-	const [candidates, setCandidates] = useState()
+	const [managersData, setManagersData] = useState([])
+	const [candidates, setCandidates] = useState([])
+	const [slots, setSlots] = useState([])
+
 
 	const { loading:interviewersLoading, error:interviewersError, data:interviewersData }
 	 = useQuery(GetInterviewers)
@@ -21,15 +22,14 @@ function admin() {
 	 const { loading:candidatesLoading, error:candidatesError, data:candidatesData }
 	 = useQuery(GetCandidates,{
 		where: {
-			interviewStatus: "TOBEINTERVIEWED"
+			status: "TOBEINTERVIEWED"
 		}
 	 })
 
-	const [selectedManager,setSelectedManager] = useState('')
-	const [selectedSlot,setSelectedSlot] = useState(0)
+	const [selectedManager,setSelectedManager] = useState(managersData[0]?.id)
+	const [selectedSlot,setSelectedSlot] = useState({})
 	const [selectedCandidate,setSelectedCandidate] = useState('')
 
-	console.log(selectedManager,selectedSlot,selectedCandidate)
 
 	useEffect(() => {
 		if(interviewersLoading||candidatesLoading)
@@ -42,9 +42,6 @@ function admin() {
 		if(interviewersError||candidatesData)
 			nProgress.done(false)
 
-		if(managersData)
-			setSelectedManager(managersData[0].interviewerId)
-
 	},[interviewersLoading,managersData,candidatesLoading])
 
 	
@@ -54,24 +51,26 @@ function admin() {
 				{managersData?.map((manager, index)=>(
 					<ManagerCard
 						key={index}
-						id={manager.interviewerId}
+						id={manager.id}
 						image={manager.image}
 						name={manager.userName}
 						role={manager.role}
+						calendarId={manager.calendarId}
+						setSlots={setSlots}
 						selected={selectedManager}
 						setSelected={setSelectedManager}
+						setSelectedSlot={setSelectedSlot}
 					/>
 				))}
 			</div>
-			<div className='flex flex-col gap-10 w-[70%] px-8'>
-				<div className='w-auto h-[20vh] rounded-2xl flex gap-5 overflow-x-scroll'>
-					{selectedManager&&
-					Slots.filter(item=>item.interviewerId===selectedManager)
-						.map((slot,index)=>(
+			<div className='flex flex-col gap-10 w-[70%] px-8 overflow-x-clip'>
+				<div className='w-full h-[20vh] flex flex-row gap-5 overflow-x-scroll'>
+					{selectedManager&&slots&&
+					slots?.map((slot,index)=>(
 						<FreeSlot
 							key={index}
 							id={slot.id}
-							timings={[slot.timestart,slot.timeend]}
+							timings={[slot.start,slot.end]}
 							day={slot.day}
 							selected={selectedSlot}
 							setSelected={setSelectedSlot}
@@ -79,12 +78,13 @@ function admin() {
 					))}
 				</div>
 				<div className='w-full h-[43vh] rounded-2xl flex flex-col gap-7 overflow-y-scroll'>
+					{!selectedManager&&<p className="text-main select-none">Please select a manager</p>}					
 					{selectedManager&&
-						candidates?.filter(candidate=>candidate.interviewStatus=='TOBEINTERVIEWED')
+						candidates?.filter(candidate=>candidate.status=='TOBEINTERVIEWED')
 						.map((candidate,index)=>(
 							<CandidateSlot
 								key={index}
-								id={candidate.candidateId}
+								id={candidate.id}
 								name={candidate.name}
 								college={candidate.college}
 								track={candidate.track}
@@ -97,6 +97,7 @@ function admin() {
 					selectedCandidate={selectedCandidate}
 					selectedManager={selectedManager}
 					selectedSlot={selectedSlot}
+					slots={slots}
 					interviewersData = {interviewersData}
 					candidatesData = {candidatesData}
 				/>
@@ -104,5 +105,6 @@ function admin() {
 		</div>
 	)
 }
+
 
 export default admin

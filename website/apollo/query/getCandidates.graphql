@@ -1,12 +1,12 @@
 query getCandidates($where: CandidateWhere) {
   candidates(where: $where) {
-    candidateId
+    id
     cgpa
     college
     email
     degree
     name
-    interviewStatus
+    status
     skillset
     telegramId
     track

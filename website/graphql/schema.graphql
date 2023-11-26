@@ -1,128 +1,168 @@
+enum InterviewerStatus{
+	WAITING
+	AVAILABLE
+	ININTERVIEW
+}
+
+enum CandidateStatus{
+	TOBEINTERVIEWED
+	ONGOING
+	REJECTED
+	SELECTED
+}
+
+enum FeedbackStatus{
+	REVIEWED
+	NOTREVIEWED
+}
+
+enum InterviewLevel{
+	TECHROUND1
+	TECHROUND2
+	HRROUND
+}
+
+
 type Admin {
 	id: ID! @id
-  userName: String
-  email: String!
-  password: String! @writeonly
+	userName: String
+	email: String!
+	password: String! @writeonly
 }
 
 type Interviewer {
-  interviewerId: ID! @id
-  userName: String
-  email: String!
-  admin: String @writeonly
-  role: String
-  image: String
-  password: String! @writeonly
-  skillset: [String]
-  status: InterviewerStatus
-  interviewList: [Interview!]! @relationship(type: "Interview", direction: OUT)
+	id: ID! @id
+	userName: String
+	email: String!
+	admin: String @writeonly
+	role: String
+	image: String
+	password: String! @writeonly
+	calendarId: String
+	skillset: [String]
+	status: InterviewerStatus
+
+	interviewList: [Interview!]! @relationship(type: "InterviewerInterview", direction: OUT)
+}
+
+
+type Candidate {
+	id: ID! @id
+	name: String!
+	college: String
+	degree: String
+	email: String!
+	admin: String @writeonly
+	telegramId: String!
+	cgpa: String
+	track: String!
+	skillset: [String] 
+	status: CandidateStatus
+
+	interviewList: [Interview!]!  @relationship(type: "CandidateInterview", direction: OUT)
 }
 
 type Interview {
-  interviewId: ID! @id
-  timeStart: DateTime
-  timeEnd: DateTime
-  duration: Float
-  admin: String @writeonly
-  description: String
-  releventLinks: [String]
+	id: ID! @id
+	timeStart: DateTime
+	timeEnd: DateTime
+	duration: Float
+	admin: String @writeonly
+	description: String
+	level: InterviewLevel
+	links: [String]
 
-  feedback: [Feedback!]! @relationship(type: "Interview", direction: IN)
-  interviewer: Interviewer @relationship(type: "Interview", direction: IN)
-  candidate: Candidate! @relationship(type: "Interview", direction: IN)
-}
-
-type Candidate {
-  candidateId: ID! @id
-  name: String!
-  college: String
-  degree: String
-  email: String!
-  admin: String @writeonly
-  telegramId: String!
-  cgpa: String
-  track: String!
-  skillset: [String] 
-  interviewStatus: CandidateStatus
-  interviewList: [Interview!]! @relationship(type: "Interview", direction: OUT)
+	feedbacks: [Feedback!]! @relationship(type: "FeedbackInterview", direction: IN)
+	interviewer: Interviewer @relationship(type: "InterviewerInterview", direction: IN)
+	candidate: Candidate @relationship(type: "CandidateInterview", direction: IN)
 }
 
 type Feedback {
-  confidence: Boolean!
-  spokenSkills: Boolean!
-  technicalSkills: Boolean!
-  problemSolving: Boolean!
-  teamwork: Boolean!
-  feedbackResponse: String!
-  feedbackDescription: String
-  interviewList: [Interview!]! @relationship(type: "Interview", direction: OUT)
+	confidence: Boolean!
+	spokenSkills: Boolean!
+	technicalSkills: Boolean!
+	problemSolving: Boolean!
+	teamwork: Boolean!
+	response: String!
+	description: String
+	status: FeedbackStatus
+
+	interview: Interview! @relationship(type: "FeedbackInterview", direction: OUT)
 }
 
 extend type Interviewer 
 	@auth(
-	rules:[{
-		operations: [DELETE,UPDATE,CONNECT,DISCONNECT]
-		allow: {
-			admin:"$jwt.id"
+	rules:[
+		{
+			operations: [DELETE,CREATE]
+			allow: {
+				admin:"$jwt.id"
+			}
 		}
-	},
-	{
-		operations: [CREATE]
-		isAuthenticated: true
-	}]
+		{
+			operations: [CONNECT,DISCONNECT,UPDATE]
+			allow: { 
+				OR: [
+					{ admin: "$jwt.id" }, 
+					{ id: "$jwt.id" } 
+				] 
+			}
+		},
+	]
 )
 
 extend type Interview
 	@auth(
-	rules:[{
-		operations: [DELETE,CONNECT,DISCONNECT]
-		allow: { OR: [{ admin: "$jwt.id" }, { interviewer: { interviewerId: "$jwt.id" }} ] }
-	},
-	{
-		operations: [CREATE]
-		isAuthenticated: true
-	}]
+	rules:[
+		{
+			operations: [CONNECT,DISCONNECT,UPDATE]
+			allow: { 
+				OR: [
+					{ admin: "$jwt.id" }, 
+					{ interviewer: { id: "$jwt.id" }} 
+				] 
+			}
+		},
+		{
+			operations: [CREATE,DELETE]
+			allow: { 
+			 	admin: "$jwt.id", 
+			}
+		}
+	]
 )
 
 extend type Candidate 
 	@auth(
-	rules:[{
-		operations: [DELETE,UPDATE,CONNECT,DISCONNECT]
-		allow: { OR: [{ admin: "$jwt.id" }, { interviewer: { interviewerId: "$jwt.id" }} ] }
-	},
-	{
-		operations: [CREATE]
-		isAuthenticated: true
-	}]
+	rules:[
+		{
+			operations: [UPDATE,CONNECT,DISCONNECT]
+			allow: { 
+				OR: [
+					{ admin: "$jwt.id" }, 
+					{ interviewer: { id: "$jwt.id" }} 
+				] 
+			}
+		},
+		{
+			operations: [CREATE,DELETE]
+			allow: { 
+			 	admin: "$jwt.id", 
+			}
+		}
+	]
 )
 
 extend type Feedback 
 	@auth(
 	rules:[{
-		operations: [DELETE,UPDATE,CONNECT,DISCONNECT]
+		operations: [DELETE,UPDATE,CONNECT,DISCONNECT,CREATE]
 		allow: {
 			interview:{
-        interviewer:{
-          interviewerId:"$jwt.id"
-        }
-      }
+				interviewer:{
+					id:"$jwt.id"
+				}
+			}
 		}
-	},
-	{
-		operations: [CREATE]
-		isAuthenticated: true
 	}]
 )
-
-enum InterviewerStatus{
-  WAITING
-  AVAILABLE
-  ININTERVIEW
-}
-
-enum CandidateStatus{
-  TOBEINTERVIEWED
-  ONGOING
-  REJECTED
-  SELECTED
-}

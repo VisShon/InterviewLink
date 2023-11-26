@@ -1,9 +1,10 @@
 query GetInterviewers{
   interviewers{
-    interviewerId
+    id
     image
     role
     skillset
+    calendarId
     status
     userName
   }

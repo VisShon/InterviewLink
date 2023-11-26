@@ -2,7 +2,7 @@ mutation UpdateCandidateStatus($where: InterviewWhere, $update: InterviewUpdateI
   updateInterviews(where: $where, update: $update) {
     interviews {
       candidate {
-        interviewStatus
+        status
       }
     }
   }

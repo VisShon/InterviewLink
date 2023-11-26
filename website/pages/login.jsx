@@ -59,8 +59,10 @@ function login() {
 					<input
 						className="h-10 z-30 rounded-lg p-5 my-2 w-full text-[grey] glass bg-[#ffffffaf] "
 						value={email}
+						type="email"
 						onChange={(e)=>setEmail(e.target.value)}
-						placeholder="Email">
+						placeholder="Email"
+						>
 					</input>
 
 					<input
@@ -76,9 +78,9 @@ function login() {
 				{error&&<h2 className="text-[red] italic my-3">{error}</h2>}
 
 				<button 
-					className="hover:shadow-md  active:opacity-80 flex flex-col text-secondary rounded-xl p-4 px-10 bg-main justify-center items-center w-[40%] h-[10%] mt-20"
+					className="hover:shadow-md  active:opacity-80  text-secondary rounded-xl p-4 px-20 bg-main  flex items-center"
 					onClick={handleClick}>
-					<p>Sign On</p>
+					Log In
 				</button>
 			</div>
 		</div>

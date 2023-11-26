@@ -1,4 +1,3 @@
-import slotsData from '@/slots.json'
 
 function comp(a, b) {
 	return a?.skillset?.length < b?.skillset?.length;

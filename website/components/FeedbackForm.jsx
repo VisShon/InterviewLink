@@ -117,7 +117,6 @@ function FeedbackForm({id}) {
 										let newParams = params
 										newParams[index].value = !params[index].value
 										setParams(newParams)
-										console.log(params)
 									}}
 								/>
 								<label for={`custom-checkbox-${index}`}>

@@ -22,7 +22,6 @@ function Interview() {
 		}
 	})
 
-	// console.log(data,error)
 	
 	useEffect(() => {
 		if(loading){

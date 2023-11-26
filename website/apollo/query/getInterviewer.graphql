@@ -4,19 +4,20 @@ query GetInterviewer($where: InterviewerWhere) {
     image
     role
     skillset
+    calendarId
     status
     userName
     interviewList {
-      interviewId
+      id
       candidate {
         track
         name
         email
         degree
         college
-        interviewStatus
+        status
         cgpa
-        candidateId
+        id
       }
       timeEnd
       timeStart

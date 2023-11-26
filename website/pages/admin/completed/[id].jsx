@@ -22,7 +22,6 @@ function CandidateProfile() {
 		}
 	})
 
-	console.log(data,error)
 	
 	useEffect(() => {
 		if(loading){
@@ -37,6 +36,7 @@ function CandidateProfile() {
 			nProgress.done(false)
 		}
 	},[loading])
+	
 
 	return (
 		<main className="flex gap-10 w-screen h-[80%] p-10  justify-between items-top overflow-hidden">

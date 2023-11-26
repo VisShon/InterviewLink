@@ -2,7 +2,7 @@ mutation UpdateCandidateInterview($where: CandidateWhere, $create: CandidateRela
   updateCandidates(where: $where, create: $create, update: $update){
     candidates {
       name
-      candidateId
+      id
     }
   }
 }

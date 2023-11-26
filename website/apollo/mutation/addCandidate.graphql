@@ -1,7 +1,7 @@
 mutation Mutation($input: [CandidateCreateInput!]!) {
   createCandidates(input: $input) {
     candidates {
-      candidateId
+      id
       name
     }
   }

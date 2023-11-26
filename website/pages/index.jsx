@@ -31,7 +31,6 @@ export default function Home({id}) {
 		}
 	},[loading])
 
-	console.log(data)
 
 	return (
 		<main>
@@ -87,7 +86,6 @@ export default function Home({id}) {
 
 export async function getServerSideProps({req,res}){
 	const token = req.cookies.token
-	console.log(decode(token))
 	return {
 		props:{
 			id:token?decode(token)?.id:''
