@@ -38,6 +38,7 @@ type Interviewer {
 	role: String
 	image: String
 	password: String! @writeonly
+	calendarId: String
 	skillset: [String]
 	status: InterviewerStatus
 

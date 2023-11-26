@@ -4,6 +4,7 @@ query GetInterviewers{
     image
     role
     skillset
+    calendarId
     status
     userName
   }

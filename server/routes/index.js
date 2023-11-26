@@ -1,20 +1,36 @@
-var express = require('express');
-var router = express.Router();
-
+var express = require('express')
+var router = express.Router()
+const { ScheduleAll,ScheduleOne } = require('../controllers/Scheduler.js')
+const { getSlots,setSlot } = require('../controllers/getSlots.js')
 
 
 router.post('/ocrAPI', function(req, res, next) {
 	//for bulk upload
-});
+})
 
-router.post('/schedulerAPI', function(req, res, next) {
-	//for single person scheduling
-	//restrict to once per 1 minute
-});
+router.post('/schedulerAPI', async function(req, res, next) {
+	const interviewData = await ScheduleOne(req.body.candidateData, req.body.interviewersData)
+	res.send(interviewData)
+	next()
+})
 
-router.get('/schedulerAPI', function(req, res, next) {
-	//for bulk scheduling
-	//restrict to once when process starts
-});
+router.get('/schedulerAPI', async function(req, res, next) {
+	const interviewSchedule = await ScheduleAll(req.body.candidatesData, req.body.interviewersData)
+	res.send(interviewSchedule)
+	next()
+})
 
-module.exports = router;
+router.get('/slotsAPI', async function(req, res, next) {
+	const interviewerSlots = await getSlots(req.query.calendarId, req.query.interviewerId)
+	res.send(interviewerSlots)
+	next()
+})
+
+router.post('/slotsAPI', async function(req, res, next) {
+	await setSlot(req.query.calendarId, req.query.interviewer, req.query.candidate)
+	res.send("OK")
+	next()
+})
+
+
+module.exports = router

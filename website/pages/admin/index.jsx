@@ -11,8 +11,10 @@ import { useQuery } from '@apollo/client'
 import nProgress from 'nprogress'
 
 function admin() {
-	const [managersData, setManagersData] = useState()
-	const [candidates, setCandidates] = useState()
+	const [managersData, setManagersData] = useState([])
+	const [candidates, setCandidates] = useState([])
+	const [slots, setSlots] = useState([])
+
 
 	const { loading:interviewersLoading, error:interviewersError, data:interviewersData }
 	 = useQuery(GetInterviewers)
@@ -24,11 +26,11 @@ function admin() {
 		}
 	 })
 
-	const [selectedManager,setSelectedManager] = useState('')
+	const [selectedManager,setSelectedManager] = useState(managersData[0]?.id)
 	const [selectedSlot,setSelectedSlot] = useState(0)
 	const [selectedCandidate,setSelectedCandidate] = useState('')
 
-	console.log(selectedManager,selectedSlot,selectedCandidate)
+	console.log(slots)
 
 	useEffect(() => {
 		if(interviewersLoading||candidatesLoading)
@@ -41,12 +43,7 @@ function admin() {
 		if(interviewersError||candidatesData)
 			nProgress.done(false)
 
-		if(managersData)
-			setSelectedManager(managersData[0]?.id)
-
 	},[interviewersLoading,managersData,candidatesLoading])
-
-	
 
 	
 	return (
@@ -59,27 +56,29 @@ function admin() {
 						image={manager.image}
 						name={manager.userName}
 						role={manager.role}
+						calendarId={manager.calendarId}
+						setSlots={setSlots}
 						selected={selectedManager}
 						setSelected={setSelectedManager}
 					/>
 				))}
 			</div>
-			<div className='flex flex-col gap-10 w-[70%] px-8'>
-				{/* <div className='w-auto h-[20vh] rounded-2xl flex gap-5 overflow-x-scroll'>
-					{selectedManager&&
-					Slots.filter(item=>item.id===selectedManager)
-						.map((slot,index)=>(
+			<div className='flex flex-col gap-10 w-[70%] px-8 overflow-x-clip'>
+				<div className='w-full h-[20vh] flex flex-row gap-5 overflow-x-scroll'>
+					{selectedManager&&slots&&
+					slots?.map((slot,index)=>(
 						<FreeSlot
 							key={index}
 							id={slot.id}
-							timings={[slot.timestart,slot.timeend]}
+							timings={[slot.start,slot.end]}
 							day={slot.day}
 							selected={selectedSlot}
 							setSelected={setSelectedSlot}
 						/>
 					))}
-				</div> */}
+				</div>
 				<div className='w-full h-[43vh] rounded-2xl flex flex-col gap-7 overflow-y-scroll'>
+					{!selectedManager&&<p className="text-main select-none">Please select a manager</p>}					
 					{selectedManager&&
 						candidates?.filter(candidate=>candidate.status=='TOBEINTERVIEWED')
 						.map((candidate,index)=>(
@@ -105,5 +104,6 @@ function admin() {
 		</div>
 	)
 }
+
 
 export default admin

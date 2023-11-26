@@ -4,6 +4,7 @@ query GetInterviewer($where: InterviewerWhere) {
     image
     role
     skillset
+    calendarId
     status
     userName
     interviewList {

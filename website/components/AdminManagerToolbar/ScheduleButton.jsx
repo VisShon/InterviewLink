@@ -2,53 +2,52 @@ import { useMutation } from "@apollo/client"
 import nProgress from "nprogress"
 import { useEffect } from "react"
 import UpdateCandidateInterview from '@/apollo/mutation/updateCandidateInterview.graphql'
-import slotsData from '@/slots.json'
 
 function ScheduleButton({managerId,candidateId,slot}) {
     
     const [updateCandidateInterview,{error,loading,data}] = useMutation(UpdateCandidateInterview);
-    const freeSlot = slotsData[slot-1]
+    const freeSlot = {}
 
     const candidateSchedule = async () =>{
 		await updateCandidateInterview({
-			variables:{
-				"where": {
-                    "candidateId": candidateId
-                  },
-          "update": {
-                    "interviewStatus": "ONGOING"
-                },
-                  "create": {
-                    "interviewList": [
-                      {
-                        "node": {
-                          "admin": process.env.ADMIN_ID,
-                          "candidate": {
-                            "connect": {
-                              "where": {
-                                "node": {
-                                  "candidateId": candidateId
-                                }
-                              }
-                            }
-                          },
-                          "interviewer": {
-                            "connect": {
-                              "where": {
-                                "node": {
-                                  "interviewerId": managerId
-                                }
-                              }
-                            }
-                          },
-                          "releventLinks": ['link'],
-                          "timeEnd": new Date(freeSlot.timestart),
-                          "timeStart": new Date(freeSlot.timeend)
-                        }
-                      }
-                    ]
-                }
-			}
+			// variables:{
+			// 	"where": {
+      //               "candidateId": candidateId
+      //             },
+      //     "update": {
+      //               "interviewStatus": "ONGOING"
+      //           },
+      //             "create": {
+      //               "interviewList": [
+      //                 {
+      //                   "node": {
+      //                     "admin": process.env.ADMIN_ID,
+      //                     "candidate": {
+      //                       "connect": {
+      //                         "where": {
+      //                           "node": {
+      //                             "candidateId": candidateId
+      //                           }
+      //                         }
+      //                       }
+      //                     },
+      //                     "interviewer": {
+      //                       "connect": {
+      //                         "where": {
+      //                           "node": {
+      //                             "interviewerId": managerId
+      //                           }
+      //                         }
+      //                       }
+      //                     },
+      //                     "releventLinks": ['link'],
+      //                     "timeEnd": new Date(freeSlot.timestart),
+      //                     "timeStart": new Date(freeSlot.timeend)
+      //                   }
+      //                 }
+      //               ]
+      //           }
+			// }
 		})
 	}
 
