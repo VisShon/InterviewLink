@@ -27,10 +27,9 @@ function admin() {
 	 })
 
 	const [selectedManager,setSelectedManager] = useState(managersData[0]?.id)
-	const [selectedSlot,setSelectedSlot] = useState(0)
+	const [selectedSlot,setSelectedSlot] = useState({})
 	const [selectedCandidate,setSelectedCandidate] = useState('')
 
-	console.log(slots)
 
 	useEffect(() => {
 		if(interviewersLoading||candidatesLoading)
@@ -60,6 +59,7 @@ function admin() {
 						setSlots={setSlots}
 						selected={selectedManager}
 						setSelected={setSelectedManager}
+						setSelectedSlot={setSelectedSlot}
 					/>
 				))}
 			</div>
@@ -97,6 +97,7 @@ function admin() {
 					selectedCandidate={selectedCandidate}
 					selectedManager={selectedManager}
 					selectedSlot={selectedSlot}
+					slots={slots}
 					interviewersData = {interviewersData}
 					candidatesData = {candidatesData}
 				/>

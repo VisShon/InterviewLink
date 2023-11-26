@@ -34,7 +34,6 @@ function Candidates() {
 		}
 	},[loading])
 
-	console.log(data)
 
 	return (
 		<main className="w-screen h-auto relative justify-center items-center flex flex-col p-10">
@@ -79,7 +78,6 @@ export default Candidates
 
 export async function getServerSideProps({req,res}){
 	const token = req.cookies.token
-	console.log(decode(token))
 	return {
 		props:{
 			id:token?decode(token)?.id:''

@@ -42,7 +42,7 @@ type Interviewer {
 	skillset: [String]
 	status: InterviewerStatus
 
-	interviewList: [Interview!]! @relationship(type: "Interview", direction: OUT)
+	interviewList: [Interview!]! @relationship(type: "InterviewerInterview", direction: OUT)
 }
 
 
@@ -57,9 +57,9 @@ type Candidate {
 	cgpa: String
 	track: String!
 	skillset: [String] 
-
 	status: CandidateStatus
-	interview: Interview @relationship(type: "Interview", direction: OUT)
+
+	interviewList: [Interview!]!  @relationship(type: "CandidateInterview", direction: OUT)
 }
 
 type Interview {
@@ -72,9 +72,9 @@ type Interview {
 	level: InterviewLevel
 	links: [String]
 
-	feedbacks: [Feedback!]! @relationship(type: "Interview", direction: IN)
-	interviewer: Interviewer @relationship(type: "Interview", direction: IN)
-	candidate: Candidate @relationship(type: "Interview", direction: IN)
+	feedbacks: [Feedback!]! @relationship(type: "FeedbackInterview", direction: IN)
+	interviewer: Interviewer @relationship(type: "InterviewerInterview", direction: IN)
+	candidate: Candidate @relationship(type: "CandidateInterview", direction: IN)
 }
 
 type Feedback {
@@ -85,9 +85,9 @@ type Feedback {
 	teamwork: Boolean!
 	response: String!
 	description: String
-
 	status: FeedbackStatus
-	interview: Interview! @relationship(type: "Interview", direction: OUT)
+
+	interview: Interview! @relationship(type: "FeedbackInterview", direction: OUT)
 }
 
 extend type Interviewer 

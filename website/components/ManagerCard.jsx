@@ -1,13 +1,12 @@
 import Image from 'next/image'
 
-function ManagerCard({image, name, role, selected, setSelected, id, setSlots, calendarId}) {
+function ManagerCard({image, name, role, selected, setSelected, id, setSlots, calendarId,setSelectedSlot}) {
 
 	const findSlots = async () => {
 		setSelected(id)
-		const res = await fetch(`http://localhost:8000/slotsAPI?calendarId=${calendarId}&interviewerId=${id}`,{
-			next: { revalidate: 10 },
-		})
+		const res = await fetch(`http://localhost:8000/slotsAPI?calendarId=${calendarId}&interviewerId=${id}`)
 		const slotsData = await res.json()
+		setSelectedSlot({})
 		return setSlots(slotsData)
 	}
 

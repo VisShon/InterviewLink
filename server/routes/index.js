@@ -27,7 +27,7 @@ router.get('/slotsAPI', async function(req, res, next) {
 })
 
 router.post('/slotsAPI', async function(req, res, next) {
-	await setSlot(req.query.calendarId, req.query.interviewer, req.query.candidate)
+	await setSlot(req.query.calendarId, req.query.start, req.query.end)
 	res.send("OK")
 	next()
 })

@@ -88,7 +88,6 @@ const ScheduleAll = async(candidatesData, interviewersData) =>{
 	let interviewersDataArray = getInterviewersFromJSON(interviewersData.interviewers)
 	let slotsData = []
 	
-	console.log(interviewersData)
 
 	// let freeSlotsDataArray = getInterviewerFreeSlots(slotsData)
 	// let interviewSchedule = schedulingAlgo1(candidatesDataArray, interviewersDataArray, freeSlotsDataArray)
