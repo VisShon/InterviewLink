@@ -5,6 +5,9 @@ import random
 import telebot
 import pandas as pd
 from  text_classifier import predict_text 
+responseData = []
+with open('result.json', 'r') as file:
+    responseData = json.load(file)
 Token = "6170075131:AAFnsHpB4rlkvkD7fiMseSZsHhpg_ut181c"
 
 bot = telebot.TeleBot(Token)
@@ -61,14 +64,13 @@ def info(message):
 @bot.message_handler(["track"])
 def get_track(message):
     user_id = str(message.from_user.id)
+    print(user_id)
     # create the data object and fill it with response data from API
     api_url = 'http://localhost:3000/api/botUpdate?telegram_id=836114955'
     response = requests.get(api_url)
-    data = response.json()
-    data_dict = dict(data)
-    for key, value in data_dict.items():
-        if str(value) == user_id:
-            bot.reply_to(message, "Your selected track for the interview: " + data["track"])  
+    # data = response.json()
+    data_dict = dict(responseData)
+    bot.reply_to(message, "Your selected track for the interview: " + responseData["track"])  
 
 
 @bot.message_handler(["status"])
@@ -76,12 +78,10 @@ def get_status(message):
     user_id = str(message.from_user.id)
     # create the data object and fill it with response data from API
     api_url = 'http://localhost:3000/api/botUpdate?telegram_id=836114955'
-    response = requests.get(api_url)
-    data = response.json() 
-    data_dict = dict(data)
-    for key, value in data_dict.items():
-        if str(value) == user_id:
-            bot.reply_to(message, "Your status: " + data["interview_status"]) 
+    # response = requests.get(api_url)
+    # data = response.json() 
+    data_dict = dict(responseData)
+    bot.reply_to(message, "Your status: " + responseData["interview_status"]) 
 
 
 @bot.message_handler(["schedule"])
@@ -90,11 +90,8 @@ def get_schedule(message):
     # create the data object and fill it with response data from API
     api_url = 'http://localhost:3000/api/botUpdate?telegram_id=836114955'
     response = requests.get(api_url)
-    data = response.json() 
-    data_dict = dict(data)
-    for key, value in data_dict.items():
-        if str(value) == user_id:
-            bot.reply_to(message, "Start time : "+data["time_start"]+"\nEnd time : " +data["time_end"]) 
+
+    bot.reply_to(message, "Start time : "+responseData["time_start"]+"\nEnd time : " +responseData["time_end"]) 
 
 
 @bot.message_handler(["interviewer"])
@@ -103,11 +100,8 @@ def get_interviewer_details(message):
     # create the data object and fill it with response data from API
     api_url = 'http://localhost:3000/api/botUpdate?telegram_id=836114955'
     response = requests.get(api_url)
-    data = response.json()
-    data_dict = dict(data)
-    for key, value in data_dict.items():
-        if str(value) == user_id:
-            bot.reply_to(message, "Your Interviewer's name : "+data["interviewer_userName"]+"\nEmail id : " +data["interviewer_email"])      
+
+    bot.reply_to(message, "Your Interviewer's name : "+responseData["interviewer_userName"]+"\nEmail id : " +responseData["interviewer_email"])      
 
 @bot.message_handler(func=lambda message: True)
 def handle_text(message):
@@ -115,7 +109,7 @@ def handle_text(message):
     response = predict_text(str(user_message)).strip()
     print(repr(response))
     print("response :" , response)
-    if(response == "facts"):
+    if(response == "Facts"):
         print("called")
         facts(message)
     elif(response == "Interviewer"):

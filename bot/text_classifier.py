@@ -17,16 +17,16 @@ def predict_text(text_to_search):
     f"""My model is trained to classify text into six categories: Facts, Track, Status, Schedule, Interviewer, and Help. Each category represents a type of inquiry or request often encountered in a professional or educational setting. \'Facts\' pertains to informational content about a company or subject. \'Track\' relates to pathways or progress in a program or system. \'Status\' is for updates or current states of applications or projects. \'Schedule\' involves timings and arrangements of events or meetings. \'Interviewer\' includes queries about the personnel involved in interviews. Lastly, \'Help\' covers assistance or guidance requests for the commands of the chatbot
 
 input: Would you mind provide some facts to me about MathWorks?
-output: facts
+output: Facts
 
 input: Could you please tell me something about MathWorks?
-output: facts
+output: Facts
 
 input: What is MathWorks?
-output: facts
+output: Facts
 
 input: Tell me about the company
-output: facts
+output: Facts
 
 input: What is my interview status?
 output: Status
