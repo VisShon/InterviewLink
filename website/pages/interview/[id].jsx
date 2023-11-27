@@ -57,7 +57,7 @@ function Interview() {
 					phone={candidateData?.candidate?.telegramId}
 				/>
 				<FeedbackForm
-					id={candidateData?.interviewId}
+					id={candidateData?.id}
 				/>
 			</div>
 

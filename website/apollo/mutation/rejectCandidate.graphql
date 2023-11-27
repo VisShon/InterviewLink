@@ -1,0 +1,7 @@
+mutation RejectCandidate($where: InterviewWhere, $disconnect: InterviewDisconnectInput, $update: InterviewUpdateInput) {
+  updateInterviews(where: $where, disconnect: $disconnect, update: $update) {
+    interviews {
+      id
+    }
+  }
+}

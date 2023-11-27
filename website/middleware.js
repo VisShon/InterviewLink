@@ -14,7 +14,7 @@ export async function middleware(req) {
 		try {
 			await verify(jwt.value, process.env.JWT_KEY);
 			const user = await decode(jwt.value)
-			if(user.id == process.env.ADMIN_ID){
+			if(user.id == process.env.NEXT_PUBLIC_NEXT_PUBLIC_ADMIN_ID){
 				req.nextUrl.pathname = pathname;
 				return NextResponse.next();
 			}
@@ -38,7 +38,7 @@ export async function middleware(req) {
 			await verify(jwt.value, process.env.JWT_KEY);
 			const user = await decode(jwt.value)
 
-			if(user.id == process.env.ADMIN_ID){
+			if(user.id == process.env.NEXT_PUBLIC_NEXT_PUBLIC_ADMIN_ID){
 				req.nextUrl.pathname = '/admin';
 				return NextResponse.redirect(req.nextUrl);
 			}

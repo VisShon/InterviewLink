@@ -12,6 +12,7 @@ function CandidateProfile() {
 	const {id} = router.query;
 
 	const [candidateData, setCandidateData] = useState({})
+	const [interviewer, setInterviewer] = useState("")
 	const [feedback, setFeedback] = useState([])
 
 	const { loading, error, data } = useQuery(GetInterview,{
@@ -22,7 +23,6 @@ function CandidateProfile() {
 		}
 	})
 
-	
 	useEffect(() => {
 		if(loading){
 			nProgress.start()
@@ -30,7 +30,8 @@ function CandidateProfile() {
 		if(!loading){
 			nProgress.done(false)
 			setCandidateData(data?.interviews[0])
-			setFeedback(data?.interviews[0]?.feedback[0])
+			setFeedback(data?.interviews[0]?.feedbacks[0])
+			setInterviewer(data?.interviews[0]?.interviewer?.userName)
 		}
 		if(error){
 			nProgress.done(false)
@@ -41,7 +42,7 @@ function CandidateProfile() {
 	return (
 		<main className="flex gap-10 w-screen h-[80%] p-10  justify-between items-top overflow-hidden">
 			<CandidateInfoPanel
-				id={candidateData?.candidate?.candidateId} 
+				id={candidateData?.candidate?.id} 
 				image={candidateData?.candidate?.image} 
 				degree={candidateData?.candidate?.degree} 
 				name={candidateData?.candidate?.name} 
@@ -51,13 +52,16 @@ function CandidateProfile() {
 			/>
 
 			<div className="flex flex-col gap-10 w-[70%]">
+				<p className="text-xl text-[grey] font-medium h-[10%]">Feedback recieved from <span className="text-main">{interviewer}</span></p>
 				<FeedbackResult
 					feedback={feedback}
 				/>
-                <AdminToolbar
-					id={id}
+				<AdminToolbar
+					interviewId={id}
+					candidateId={candidateData?.candidate?.id}
+					interviewerId={candidateData?.interviewer?.id}
 					track={candidateData?.candidate?.track}
-                />
+				/>
 			</div>
 
 		</main>

@@ -16,10 +16,9 @@ enum FeedbackStatus{
 	NOTREVIEWED
 }
 
-enum InterviewLevel{
-	TECHROUND1
-	TECHROUND2
-	HRROUND
+enum Track{
+	TECHNICAL
+	HR
 }
 
 
@@ -56,7 +55,7 @@ type Candidate {
 	admin: String @writeonly
 	telegramId: String!
 	cgpa: String
-	track: String!
+	track: Track!
 	skillset: [String] 
 	status: CandidateStatus
 	image: String
@@ -72,7 +71,6 @@ type Interview {
 	duration: Float
 	admin: String @writeonly
 	description: String
-	level: InterviewLevel
 	links: [String]
 
 	feedbacks: [Feedback!]! @relationship(type: "FeedbackInterview", direction: IN)
@@ -143,7 +141,11 @@ extend type Candidate
 			allow: { 
 				OR: [
 					{ admin: "$jwt.id" }, 
-					{ interviewer: { id: "$jwt.id" }} 
+					{ 
+					interviewList:{
+						interviewer:{id: "$jwt.id"}
+						} 
+					}
 				] 
 			}
 		},

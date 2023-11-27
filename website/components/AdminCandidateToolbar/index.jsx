@@ -2,15 +2,18 @@ import GoButton from "./GoButton"
 import NoGoButton from "./NoGoButton"
 
 
-function AdminToolbar({id,track}){
+function AdminToolbar({interviewId,candidateId,track,interviewerId}){
 	return (
-		<div className="flex gap-10 w-[85%] items-center">
+		<div className="flex gap-10 w-[45%] items-center font-bold">
 				<GoButton 
-					id={id}
+					interviewId={interviewId}
+					candidateId={candidateId}
 					track={track}
 				/>
 				<NoGoButton
-					id={id}
+					candidateId={candidateId}
+					interviewId={interviewId}
+					interviewerId={interviewerId}
 				/>
 		</div>
 	)

@@ -1,6 +1,6 @@
 import Search from "@/components/Search"
 import CompletedCandidateCard from "@/components/CompletedCandidateCard"
-import GetInterviewer from '@/apollo/query/getInterviewCompleted.graphql'
+import GetInterview from '@/apollo/query/getInterviewCompleted.graphql'
 import nProgress from "nprogress"
 import { decode } from "jsonwebtoken"
 import { useState,useEffect } from "react"
@@ -11,7 +11,7 @@ function Candidates() {
 	const [sort,setSort] = useState(false)
 	const [candidates, setCandidates] = useState()
 	const [searchParam,setSearchParam] = useState([])
-	const { loading, error, data } = useQuery(GetInterviewer,{
+	const { loading, error, data } = useQuery(GetInterview,{
 		variables:{
 			"where": {
 				"candidate": {
@@ -20,6 +20,9 @@ function Candidates() {
 			}
 		}
 	})
+
+	console.log(data,error)
+	
 
 	useEffect(() => {
 		if(loading){
@@ -60,13 +63,13 @@ function Candidates() {
 				if(a?.candidate?.cgpa>b?.candidate?.cgpa&&sort){return -1}
 				else{return 1}
 			})
-			.map(({candidate,interviewId},index)=>(
+			.map(({candidate,id},index)=>(
 				<CompletedCandidateCard
 					key={index}
-					id={interviewId}
+					id={id}
 					name={candidate?.name}
 					college={candidate?.college}
-					role={candidate?.track}
+					degree={candidate?.degree}
 					description={'Lorem ipsum dolor sit amet consectetur. Lacus rutrum egestas sollicitudin viverra faucibus vitae. Vitae mi pellentesque sed nulla tortor ac placerat. Non non vitae auctor semper tristique ipsum blandit sapien.'}
 				/>
 			))}
@@ -75,12 +78,3 @@ function Candidates() {
 }
 
 export default Candidates
-
-export async function getServerSideProps({req,res}){
-	const token = req.cookies.token
-	return {
-		props:{
-			id:token?decode(token)?.id:''
-		}
-	}
-}

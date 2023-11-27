@@ -14,6 +14,10 @@ function ScheduleButton({managerId,candidateId,slot,managerGraderLink}) {
 
 	const candidateSchedule = async () =>{
 		const links = [`https://meet.google.com/lookup/${"Mathworks-"+candidateId}`,managerGraderLink]
+		const admin = process.env.NEXT_PUBLIC_NEXT_PUBLIC_ADMIN_ID
+
+		console.log(admin)
+
 		await updateCandidateInterview({
 			variables:{
 				"where": {
@@ -28,7 +32,7 @@ function ScheduleButton({managerId,candidateId,slot,managerGraderLink}) {
 					"interviewList":[
 						{
 							"node": {
-								"admin": process.env.ADMIN_ID,
+								"admin": admin,
 	
 								"candidate": {
 									"connect": {
