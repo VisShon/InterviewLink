@@ -6,19 +6,17 @@ import SendMail from "./SendMail"
 
 function InterviewToolbar({links=[], mail, name, phone}){
 	
-	const [teamsLink,setTeamsLink] = useState('')
-	useEffect(()=>setTeamsLink(links[0]),[links])
-
 	return (
 		<div className="flex gap-10 w-[85%] justify-between items-center">
 				<SendInvite 
 					mail={mail}
 					name={name}
-					links={teamsLink}
+					links={links[0]}
 				/>
 				<SendAssesment
 					mail={mail}
 					name={name}
+					links={links[1]}
 				/>
 				<SendMail 
 					mail={mail}

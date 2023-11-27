@@ -6,12 +6,14 @@ import addHours from "date-fns/addHours"
 import nProgress from "nprogress"
 import UpdateCandidateInterview from "@/apollo/mutation/updateCandidateInterview.graphql"
 
-function ScheduleButton({managerId,candidateId,slot}) {
+function ScheduleButton({managerId,candidateId,slot,managerGraderLink}) {
 
 	const router = useRouter()
 
 	const [updateCandidateInterview,{error,loading,data}] = useMutation(UpdateCandidateInterview);
+
 	const candidateSchedule = async () =>{
+		const links = [`https://meet.google.com/lookup/${"Mathworks-"+candidateId}`,managerGraderLink]
 		await updateCandidateInterview({
 			variables:{
 				"where": {
@@ -48,9 +50,9 @@ function ScheduleButton({managerId,candidateId,slot}) {
 									}
 								},
 								
-								"links": ["link"],
-								"timeEnd": new Date(slot.timestamp),
-								"timeStart": addHours(new Date(slot.timestamp), 1)
+								"links": links,
+								"timeEnd": slot.timestampEnd,
+								"timeStart": slot.timestampStart
 							}
 						}
 					]

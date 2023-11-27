@@ -15,7 +15,7 @@ function Candidates() {
 		variables:{
 			"where": {
 				"candidate": {
-				  "interviewStatus": "TOBEINTERVIEWED"
+				  "status": "TOBEINTERVIEWED"
 				}
 			}
 		}
@@ -52,7 +52,7 @@ function Candidates() {
 			{candidates?.filter(({candidate})=>
 			(searchParam==''?true:
 			candidate?.name?.toLowerCase().includes(searchParam)||
-			candidate?.interviewStatus?.toLowerCase().includes(searchParam)||
+			candidate?.status?.toLowerCase().includes(searchParam)||
 			candidate?.track?.toLowerCase().includes(searchParam)||
 			candidate?.college?.toLowerCase().includes(searchParam)||
 			candidate?.degree?.toLowerCase().includes(searchParam)))

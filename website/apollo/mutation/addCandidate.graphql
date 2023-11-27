@@ -14,7 +14,7 @@ mutation Mutation($input: [CandidateCreateInput!]!) {
 #       "degree": null,
 #       "college": null,
 #       "email": null,
-#       "interviewStatus": null,
+#       "status": null,
 #       "name": null,
 #       "skillset": null,
 #       "telegramId": null,

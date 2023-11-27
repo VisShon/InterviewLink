@@ -28,7 +28,7 @@ function AutoScheduleButton({candidatesData, interviewersData}) {
 								"candidateId": candidateId,
 							},
 							"update": {
-								"interviewStatus": "ONGOING"
+								"status": "ONGOING"
 							},
 							"create": {
 								"interviewList": [

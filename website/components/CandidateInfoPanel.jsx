@@ -8,7 +8,7 @@ function CandidateInfoPanel({id, image, name, college, skills, description,degre
 			src={image?image:'/profile.svg'}
 			height={100}
 			width={100}
-			className='w-[60%] border-2 border-[white] rounded-full '
+			className='w-[15rem] h-[15rem] object-cover border-2 border-[white] rounded-full '
 		/>
 		<div className='flex flex-col'>
 			<h2>

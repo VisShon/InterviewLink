@@ -3,6 +3,7 @@ query GetInterviewer($where: InterviewerWhere) {
     email
     image
     role
+    graderLink
     skillset
     calendarId
     status

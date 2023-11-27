@@ -17,7 +17,7 @@ function NoGoButton({id}) {
 				  "candidate": {
 					"update": {
 					  "node": {
-						"interviewStatus": "REJECTED"
+						"status": "REJECTED"
 					  }
 					}
 				  }

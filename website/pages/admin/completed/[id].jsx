@@ -17,7 +17,7 @@ function CandidateProfile() {
 	const { loading, error, data } = useQuery(GetInterview,{
 		variables:{
 			where:{
-				interviewId:id
+				id:id
 			}
 		}
 	})
@@ -36,7 +36,7 @@ function CandidateProfile() {
 			nProgress.done(false)
 		}
 	},[loading])
-	
+
 
 	return (
 		<main className="flex gap-10 w-screen h-[80%] p-10  justify-between items-top overflow-hidden">

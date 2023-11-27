@@ -2,6 +2,7 @@ query GetInterviewers{
   interviewers{
     id
     image
+    graderLink
     role
     skillset
     calendarId

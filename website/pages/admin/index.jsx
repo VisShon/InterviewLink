@@ -12,6 +12,7 @@ import nProgress from 'nprogress'
 
 function admin() {
 	const [managersData, setManagersData] = useState([])
+	const [managerGraderLink, setManagerGraderLink] = useState('')
 	const [candidates, setCandidates] = useState([])
 	const [slots, setSlots] = useState([])
 
@@ -30,6 +31,10 @@ function admin() {
 	const [selectedSlot,setSelectedSlot] = useState({})
 	const [selectedCandidate,setSelectedCandidate] = useState('')
 
+	useEffect(()=>{
+		const graderLink = managersData?.find(manager=>manager?.id==selectedManager)?.graderLink
+		setManagerGraderLink(graderLink)
+	},[selectedManager])
 
 	useEffect(() => {
 		if(interviewersLoading||candidatesLoading)
@@ -98,6 +103,7 @@ function admin() {
 					selectedManager={selectedManager}
 					selectedSlot={selectedSlot}
 					slots={slots}
+					managerGraderLink={managerGraderLink}
 					interviewersData = {interviewersData}
 					candidatesData = {candidatesData}
 				/>

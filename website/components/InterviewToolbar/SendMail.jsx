@@ -8,7 +8,7 @@ function SendMail({mail}) {
 			href={`mailto:${mail}`}>
 			<Image
 				alt='mail'
-				src={'/Mail.svg'}
+				src={'/mail.svg'}
 				height={100}
 				width={100}
 				className='w-[2rem] '
