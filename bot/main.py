@@ -36,6 +36,17 @@ def help(message):
         /track -> view your selected track.
         /interviewer -> get you interviewer's details.
         /status -> get your interview status.
+        /support -> get the customer support form
+        """,
+    )
+
+@bot.message_handler(["support"])
+def support(message):
+    bot.reply_to(
+        message,
+        """
+        You can fill the form below to contact customer support : 
+        https://share.hsforms.com/1JQ_BScQBS9GYt6TZ7SXN6Aqhsrr
         """,
     )
 
@@ -120,6 +131,8 @@ def handle_text(message):
         get_status(message)
     elif(response == "Track"):
         get_track(message)
+    elif(response == "Support"):
+        support(message)
     else:
         help(message)
 
