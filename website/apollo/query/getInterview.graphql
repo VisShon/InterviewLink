@@ -8,17 +8,19 @@ query getInterview($where: InterviewWhere) {
       name
       email
       status
+      image
       degree
       college
       cgpa
     }
     description
     links
-    feedback {
+    feedbacks {
       confidence
-      feedbackDescription
-      feedbackResponse
+      description
       problemSolving
+      response
+      status
       spokenSkills
       teamwork
       technicalSkills

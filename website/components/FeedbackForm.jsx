@@ -8,7 +8,7 @@ import { useRouter } from "next/router"
 function FeedbackForm({id}) {
 
 	const [addFeedback,{error:feedbackError,loading:feedbackLoading,data:feedbackData}] = useMutation(AddFeedback);
-	const [updateInterviewStatus,{error:statusError,loading:statusLoading,data:statusData}] = useMutation(UpdateCandidateStatus);
+	const [updatestatus,{error:statusError,loading:statusLoading,data:statusData}] = useMutation(UpdateCandidateStatus);
 
 	const router = useRouter()
 	const [feedback,setFeedback] = useState("")
@@ -39,7 +39,7 @@ function FeedbackForm({id}) {
 						  {
 							"where": {
 							  "node": {
-								"interviewId": id
+								"id": id
 							  }
 							}
 						  }
@@ -53,16 +53,16 @@ function FeedbackForm({id}) {
 	}
 
 	const handleStatusUpdate = async () =>{
-		await updateInterviewStatus({
+		await updatestatus({
 			variables:{
 				"where": {
-				  "interviewId": id
+				  "id": id
 				},
 				"update": {
 				  "candidate": {
 					"update": {
 					  "node": {
-						"interviewStatus": "TOBEINTERVIEWED"
+						"status": "TOBEINTERVIEWED"
 					  }
 					}
 				  }

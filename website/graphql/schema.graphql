@@ -38,6 +38,7 @@ type Interviewer {
 	role: String
 	image: String
 	password: String! @writeonly
+	graderLink: String
 	calendarId: String
 	skillset: [String]
 	status: InterviewerStatus
@@ -58,6 +59,8 @@ type Candidate {
 	track: String!
 	skillset: [String] 
 	status: CandidateStatus
+	image: String
+	resumeURL: String
 
 	interviewList: [Interview!]!  @relationship(type: "CandidateInterview", direction: OUT)
 }

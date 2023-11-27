@@ -28,7 +28,7 @@ function GoButton({id,track}) {
 					"update": {
 					  "node": {
 						"track": "HR",
-						"interviewStatus": newStatus
+						"status": newStatus
 					  }
 					}
 				  }

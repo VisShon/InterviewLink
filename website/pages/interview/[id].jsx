@@ -17,11 +17,12 @@ function Interview() {
 	const { loading, error, data } = useQuery(GetInterview,{
 		variables:{
 			where:{
-				interviewId:id
+				id:id
 			}
 		}
 	})
 
+	console.log(data)
 	
 	useEffect(() => {
 		if(loading){
@@ -39,7 +40,7 @@ function Interview() {
 	return (
 		<main className="flex gap-10 w-screen h-[80%] px-20 justify-between items-top overflow-hidden">
 			<CandidateInfoPanel
-				id={candidateData?.candidate?.candidateId} 
+				id={candidateData?.candidate?.id} 
 				image={candidateData?.candidate?.image} 
 				degree={candidateData?.candidate?.degree} 
 				name={candidateData?.candidate?.name} 
@@ -50,7 +51,7 @@ function Interview() {
 
 			<div className="flex flex-col gap-10 w-[70%]">
 				<InterviewToolbar
-					links={candidateData?.releventLinks}
+					links={candidateData?.links}
 					mail={candidateData?.candidate?.email}
 					name={candidateData?.candidate?.name}
 					phone={candidateData?.candidate?.telegramId}

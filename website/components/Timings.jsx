@@ -1,31 +1,53 @@
 import React from 'react'
 import Link from 'next/link'
+import Interview from '../pages/interview/[id]';
 
-function Timings({id, name, college, role, timings, degree, status}) {
+function Timings({id, name, college,role, timings, degree, status, day}) {
+	const bgVariants = {
+		ongoing:"bg-[white]",
+		tobeinterviewed:"bg-[#ffffff43]"
+	}
+	const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
 	return (
-		status=='ONGOING'?
-		<Link className="flex flex-col justify-center items-left text-left relative bg-[white] rounded-xl w-full p-5 shadow-sm mb-5 text-[#898989] hover:shadow-md"
-				href={`/interview/${id}`}>
-			<h2 className="text-main">
-					{timings[0]+'-'+timings[1]}
-			</h2>
-			<p className="text-[#4D4D4D]">
+		
+		<div className={`flex flex-col justify-center items-left text-left relative  rounded-xl w-full p-5 shadow-sm mb-5 text-[#898989] hover:shadow-md ${status=='ONGOING'?bgVariants.ongoing:bgVariants.tobeinterviewed}`}>
+			<div className="h-[60%] flex w-full justify-between">
+				<h2 className="text-main text-2xl font-bold">
+						{daysOfWeek[day]+', '+timings[0]+'-'+timings[1]}
+				</h2>
+
+				<Link target="_blank" 
+					className='w-[20%] py-3 hover:opacity-90 text-center bg-main font-bold text-[white] rounded-xl flex items-center justify-center' 
+					href={`/interview/${id}`}>
+					Start Interview
+				</Link>
+			</div>
+			<div className='flex flex-col gap-2'>
+				<span className="text-[#4D4D4D]">
+					{name+', '+college+', '+role}
+				</span>
+
+				<span className="text-[#4D4D4D]">
 					{role}
-			</p>
-			<span className="mt-5  fonte-[100] text-[1.5rem]">
-				{name+', '+college+', '+degree}
-			</span>
-		</Link>:
-		<div className="flex flex-col justify-center items-left text-left relative bg-[#ffffff43] rounded-xl w-full p-5 shadow-sm mb-5 text-main hover:shadow-md">
-			<h2>
-				{timings[0]+'-'+timings[1]}
-			</h2>
-			<p className="text-[#4D4D4D]">
-				{status=='TOBEINTERVIEWED'&&'Interviewed'}
-			</p>
-			<span className="mt-5  fonte-[100] text-[1.5rem]">
-				{name+', '+college+', '+degree}
-			</span>
+				</span>
+
+				
+
+				<div className='flex gap-5 w-[40%] text-main'>
+					<button 
+						onClick={()=>alert("job for the role of "+role+" intern")}
+						className='w-[50%] text-center font-bold border-2 border-main rounded-xl hover:opacity-90'>
+						Job Description
+					</button>
+
+					<Link target="_blank" 
+						href={`/resume`} 
+						className='w-[50%]  text-center font-bold border-2 border-main rounded-xl hover:opacity-90'>
+						Resume
+					</Link>
+				</div>
+			</div>
 		</div>
 	)
 }

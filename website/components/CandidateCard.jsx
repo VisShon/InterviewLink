@@ -1,31 +1,34 @@
 import Link from "next/link"
 
 function CandidateCard({id,name,college,role,description,status}) {
+	const bgVariants = {
+		tobeinterviewed:"bg-[#FFFFFF]",
+		ongoing:"bg-[#ffffff43]"
+	}
 	return (
-		status=='ONGOING'?
-		<Link className="flex flex-col justify-center items-left text-left relative bg-[white] rounded-xl w-full p-5 shadow-sm my-5 text-[#898989] hover:shadow-md"
+		
+		
+		<Link target="_blank" className={`flex flex-col justify-center items-left text-left relative  rounded-xl w-full p-5 shadow-sm mb-5 text-[#898989] hover:shadow-md ${status=='ONGOING'?bgVariants.ongoing:bgVariants.tobeinterviewed}`}
 				href={`/interview/${id}`}>
-			<h2 className="text-main">
-				{name+', '+college}
-			</h2>
-			<p className="text-[#4D4D4D]">
-				{role}
-			</p>
-			<span className="mt-10">
-				{description}
-			</span>
-		</Link>:
-		<div className="flex flex-col justify-center items-left text-left relative bg-[#ffffff83] rounded-xl w-full p-5 shadow-sm my-5 text-[#898989] hover:shadow-md">
-			<h2 className="text-main">
-				{name+', '+college}
-			</h2>
-			<p className="text-[#4D4D4D]">
-				{status=='TOBEINTERVIEWED'&&'Interviewed'}
-			</p>
-			<span className="mt-10">
-				{description}
-			</span>
-		</div>
+			<div className="w-full flex justify-between">
+				<h2 className="text-main text-2xl font-bold">
+					{name+', '+college}
+				</h2>
+				{!status=="ONGOING"&&
+				<div className="bg-[#c1f2a7] border-2 border-[#166d16] px-10 text-[#166d16] font-bold rounded-full">
+					Interviewed
+				</div>}
+			</div>
+
+			<div className="flex flex-col w-full gap-1">
+				<p className="text-[#4D4D4D]">
+					{role}
+				</p>
+				<span className="mt-10">
+					{description}
+				</span>
+			</div>
+		</Link>
 	)
 }
 

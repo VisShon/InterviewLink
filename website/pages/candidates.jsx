@@ -14,7 +14,7 @@ function Candidates({id}) {
 	const { loading, error, data } = useQuery(GetInterviewer,{
 		variables:{
 			where: {
-			  interviewerId: id
+			  id: id
 			}
 		}
 	})
@@ -51,7 +51,7 @@ function Candidates({id}) {
 			{candidates?.filter(({candidate})=>
 			(searchParam==''?true:
 			candidate?.name?.toLowerCase().includes(searchParam)||
-			candidate?.interviewStatus?.toLowerCase().includes(searchParam)||
+			candidate?.status?.toLowerCase().includes(searchParam)||
 			candidate?.track?.toLowerCase().includes(searchParam)||
 			candidate?.college?.toLowerCase().includes(searchParam)||
 			candidate?.degree?.toLowerCase().includes(searchParam)))
@@ -66,7 +66,7 @@ function Candidates({id}) {
 					name={candidate?.name}
 					college={candidate?.college}
 					role={candidate?.track}
-					status={candidate?.interviewStatus}
+					status={candidate?.status}
 					description={'Lorem ipsum dolor sit amet consectetur. Lacus rutrum egestas sollicitudin viverra faucibus vitae. Vitae mi pellentesque sed nulla tortor ac placerat. Non non vitae auctor semper tristique ipsum blandit sapien.'}
 				/>
 			))}

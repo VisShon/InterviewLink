@@ -12,7 +12,7 @@ export default function Home({id}) {
 	const { loading, error, data } = useQuery(GetInterviewer,{
 		variables:{
 			where: {
-			  interviewerId: id
+			  id: id
 			}
 		}
 	})
@@ -24,7 +24,7 @@ export default function Home({id}) {
 		if(!loading){
 			nProgress.done(false)
 			setManagerData(data?.interviewers[0])
-			sessionStorage.setItem(data?.interviewers[0].image,'image')
+			sessionStorage.setItem('image',data?.interviewers[0].image)
 		}
 		if(error){
 			nProgress.done(false)
@@ -56,25 +56,26 @@ export default function Home({id}) {
 						skills={managerData?.skillset}
 						candidates={managerData?.interviewList.length}
 						completed={managerData?.interviewList
-						.filter(item=>item.candidate.interviewStatus=='TOBEINTERVIEWED').length}
+						.filter(item=>item.candidate.status=='TOBEINTERVIEWED').length}
 					/>
 				</div>
 
 				<div className='flex flex-col w-[70%]'>
-					{managerData?.interviewList?.map(({candidate,timeStart,timeEnd,interviewId},index)=>{
+					{managerData?.interviewList?.map(({candidate,timeStart,timeEnd,id},index)=>{
 						const startTime = new Date(timeStart);
 						const endTime = new Date(timeEnd);
-						const startTimeFormatted = startTime.toLocaleString('en-GB', { timeZone: 'UTC' });
-						const endTimeFormatted = endTime.toLocaleString('en-GB', { timeZone: 'UTC' });
+						const startTimeFormatted = startTime.toLocaleTimeString('en-US', { hour12: true });
+						const endTimeFormatted = endTime.toLocaleTimeString('en-US', { hour12: true });
 						return (
 						<Timings
 							key={index}
-							id={interviewId}
+							id={id}
 							name={candidate.name}
 							college={candidate.college}
 							degree={candidate.degree}
 							role={candidate.track}
-							status={candidate.interviewStatus}
+							day={startTime.getDay()}
+							status={candidate.status}
 							timings={[startTimeFormatted,endTimeFormatted]}
 						/>)
 					})}
