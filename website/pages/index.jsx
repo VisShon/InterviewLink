@@ -24,7 +24,7 @@ export default function Home({id}) {
 		if(!loading){
 			nProgress.done(false)
 			setManagerData(data?.interviewers[0])
-			sessionStorage.setItem('image',data?.interviewers[0].image)
+			localStorage.setItem('image',data?.interviewers[0].image)
 		}
 		if(error){
 			nProgress.done(false)

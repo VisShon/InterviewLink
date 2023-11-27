@@ -34,7 +34,7 @@ function AutoScheduleButton({candidatesData, interviewersData}) {
 								"interviewList": [
 									{
 										"node": {
-											"admin": process.env.ADMIN_ID,
+											"admin": process.env.NEXT_PUBLIC_NEXT_PUBLIC_ADMIN_ID,
 											"candidate": {
 												"connect": {
 													"where": {

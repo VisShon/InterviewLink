@@ -20,33 +20,33 @@ function FeedbackForm({id}) {
 		{name:'teamwork', value:false},
 		{name:'technical skills', value:false}
 	])
+
+	console.log(id)
 	
 	const handleFeedbackSubmission = async () =>{
 		await addFeedback({
 			variables:{
 				"create": {
-				  "feedback": {
+				  "feedbacks": [{
 					"node": {
 					  "confidence": params[0].value,
-					  "feedbackDescription": remark,
-					  "feedbackResponse": feedback,
+					  "description": remark,
+					  "response": feedback,
 					  "problemSolving": params[1].value,
 					  "spokenSkills": params[2].value,
 					  "teamwork": params[3].value,
 					  "technicalSkills": params[4].value,
-					  "interviewList": {
-						"connect": [
-						  {
+					  "interview": {
+						"connect": {
 							"where": {
 							  "node": {
 								"id": id
 							  }
 							}
-						  }
-						]
+						}
 					  }
 					}
-				  }
+				  }]
 				}
 			}
 		})

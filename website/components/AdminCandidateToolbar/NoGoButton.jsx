@@ -1,28 +1,46 @@
 import { useMutation } from "@apollo/client"
 import nProgress from "nprogress"
 import { useEffect } from "react"
-import UpdateCandidateStatus from "@/apollo/mutation/updateCandidateStatus.graphql"
+import RejectCandidate from "@/apollo/mutation/rejectCandidate.graphql"
 import { useRouter } from "next/router"
 
-function NoGoButton({id}) {
+function NoGoButton({candidateId,interviewId,interviewerId}) {
+
+	console.log(candidateId,interviewId,interviewerId)
+
     const router = useRouter()
-    const [updateCandidateStatus,{error,loading,data}] = useMutation(UpdateCandidateStatus);	
+    const [rejectCandidate,{error,loading,data}] = useMutation(RejectCandidate)	
+
 	const candidateFail = async () =>{
-		await updateCandidateStatus({
+		await rejectCandidate({
 			variables:{
-				"where": {
-				  "interviewId": id
+				where: {
+				  id: interviewId
 				},
-				"update": {
-				  "candidate": {
-					"update": {
-					  "node": {
-						"status": "REJECTED"
+				disconnect: {
+				  interviewer: {
+					where: {
+					  node: {
+						id: interviewerId
+					  }
+					}
+				  }
+				},
+				update: {
+				  candidate: {
+					update: {
+					  node: {
+						status: "REJECTED"
+					  }
+					},
+					where: {
+					  node: {
+						id: candidateId
 					  }
 					}
 				  }
 				}
-			}
+			  }
 		})
 	}
 

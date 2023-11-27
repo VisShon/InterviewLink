@@ -1,5 +1,6 @@
 
 function FeedbackResult({feedback}) {
+	
 	return (
 		<main className="flex gap-10 bg-secondary w-full h-full rounded-2xl p-10 text-[black]">
 			<div className="w-[45%]">
@@ -8,7 +9,7 @@ function FeedbackResult({feedback}) {
 					<input 
 						className="p-2 border-2 border-[grey] rounded-md w-full"
 						type="text" 
-						value={feedback?.feedbackResponse}
+						value={feedback?.response}
 					/>
 				</div>
 
@@ -89,7 +90,7 @@ function FeedbackResult({feedback}) {
 				<p>Remark</p>
 				<textarea 
 					className="p-2 border-2 border-[grey] rounded-md w-full h-full"
-					value={feedback?.feedbackDescription}
+					value={feedback?.description}
 				/>
 			</div>
 		</main>

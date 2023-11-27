@@ -17,11 +17,17 @@ function Timings({id, name, college,role, timings, degree, status, day}) {
 						{daysOfWeek[day]+', '+timings[0]+'-'+timings[1]}
 				</h2>
 
-				<Link target="_blank" 
-					className='w-[20%] py-3 hover:opacity-90 text-center bg-main font-bold text-[white] rounded-xl flex items-center justify-center' 
-					href={`/interview/${id}`}>
-					Start Interview
-				</Link>
+				{status=='ONGOING'?
+					<Link  						
+						target="_blank" 
+						className='w-[20%] py-3 hover:opacity-90 text-center bg-main font-bold text-[white] rounded-xl flex items-center justify-center' 
+						href={`/interview/${id}`}>
+						Start Interview
+					</Link>:
+					<div className="bg-[#c1f2a7] border-2 border-[#166d16] px-10 text-[#166d16] font-bold rounded-full">
+						Interviewed
+					</div>
+				}
 			</div>
 			<div className='flex flex-col gap-2'>
 				<span className="text-[#4D4D4D]">
@@ -41,7 +47,8 @@ function Timings({id, name, college,role, timings, degree, status, day}) {
 						Job Description
 					</button>
 
-					<Link target="_blank" 
+					<Link  						
+						target="_blank" 
 						href={`/resume`} 
 						className='w-[50%]  text-center font-bold border-2 border-main rounded-xl hover:opacity-90'>
 						Resume

@@ -36,8 +36,6 @@ const getSlots = async(calendarId,interviewerId) =>{
 
 	let availableSlots = []
 	const workdayStart = new Date()
-	workdayStart.setHours(8, 0, 0, 0)
-
 	const workdayEnd = new Date()
 	workdayEnd.setHours(19, 0, 0, 0)
 

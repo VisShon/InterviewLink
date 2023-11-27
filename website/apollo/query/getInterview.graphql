@@ -3,6 +3,7 @@ query getInterview($where: InterviewWhere) {
     id
     candidate {
       track
+      id
       telegramId
       skillset
       name
@@ -24,6 +25,10 @@ query getInterview($where: InterviewWhere) {
       spokenSkills
       teamwork
       technicalSkills
+    }
+    interviewer{
+      userName
+      id
     }
   }
 }

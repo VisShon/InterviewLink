@@ -1,0 +1,7 @@
+mutation NextRound($where: InterviewWhere, $update: InterviewUpdateInput, $disconnect: InterviewDisconnectInput) {
+  updateInterviews(where: $where, update: $update, disconnect: $disconnect) {
+    interviews {
+      id
+    }
+  }
+}

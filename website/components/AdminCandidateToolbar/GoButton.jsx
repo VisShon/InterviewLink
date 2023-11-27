@@ -1,39 +1,51 @@
 import { useMutation } from "@apollo/client"
-import nProgress from "nprogress"
-import { useEffect } from "react"
-import UpdateCandidateStatus from "@/apollo/mutation/updateCandidateStatus.graphql"
 import { useRouter } from "next/router";
+import { useEffect } from "react";
+import nProgress from "nprogress"
+import NextRound from "@/apollo/mutation/nextRound.graphql"
 
-function GoButton({id,track}) {
-    const [updateCandidateStatus,{error,loading,data}] = useMutation(UpdateCandidateStatus);	
+function GoButton({interviewId,candidateId,interviewerId,track}) {
+    const [updateCandidateStatus,{error,loading,data}] = useMutation(NextRound);	
 	const router = useRouter()
 
 	const candidatePass = async () =>{
 		let newStatus
+		let newTrack
 
 		if(track=='TECHNICAL'){
 			newStatus='TOBEINTERVIEWED'
+			newTrack="HR"
 		}
 		if(track=='HR'){
 			newStatus='SELECTED'
+			newTrack="HR"
 		}
 
 		await updateCandidateStatus({
 			variables:{
-				"where": {
-				  "interviewId": id
+				where: {
+				  id: interviewId
 				},
-				"update": {
-				  "candidate": {
-					"update": {
-					  "node": {
-						"track": "HR",
-						"status": newStatus
+				update: {
+				  candidate: {
+					update: {
+					  node: {
+						status: newStatus,
+						track: newTrack
+					  }
+					}
+				  }
+				},
+				disconnect: {
+				  interviewer: {
+					where: {
+					  node: {
+						id: interviewerId
 					  }
 					}
 				  }
 				}
-			}
+			  }
 		})
 	}
 

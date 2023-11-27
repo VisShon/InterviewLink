@@ -95,7 +95,7 @@ export const logIn = async(args) =>{
 			const token = jwt.sign(
 				{
 					...admin[0],
-					id:process.env.ADMIN_ID
+					id:process.env.NEXT_PUBLIC_NEXT_PUBLIC_ADMIN_ID
 				},
 				process.env.JWT_KEY,
 				{
@@ -153,6 +153,7 @@ export const botController = async(args) =>{
 		selectionSet
 	}) 
 
+	console.log("interview gsldfksl;fjksdlf",interview)
 
 	if(interview.length!==0){
 		const startTime = new Date(interview[0].timeStart);

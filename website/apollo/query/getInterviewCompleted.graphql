@@ -1,8 +1,9 @@
-query getInterview($where: InterviewWhere) {
+query GetInterview($where: InterviewWhere) {
   interviews(where: $where) {
     id
     candidate {
       track
+      id
       telegramId
       skillset
       name
@@ -12,10 +13,10 @@ query getInterview($where: InterviewWhere) {
       college
       cgpa
     }
-    feedback {
+    feedbacks {
       confidence
-      feedbackDescription
-      feedbackResponse
+      description
+      response
       teamwork
       technicalSkills
       spokenSkills
@@ -23,5 +24,9 @@ query getInterview($where: InterviewWhere) {
     }
     description
     links
+    interviewer{
+      userName
+      id
+    }
   }
 }
