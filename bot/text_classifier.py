@@ -14,7 +14,7 @@ def predict_text(text_to_search):
     }
     model = TextGenerationModel.from_pretrained("text-bison")
     response = model.predict(
-    f"""My model is trained to classify text into six categories: Facts, Track, Status, Schedule, Interviewer, and Help. Each category represents a type of inquiry or request often encountered in a professional or educational setting. \'Facts\' pertains to informational content about a company or subject. \'Track\' relates to pathways or progress in a program or system. \'Status\' is for updates or current states of applications or projects. \'Schedule\' involves timings and arrangements of events or meetings. \'Interviewer\' includes queries about the personnel involved in interviews. Lastly, \'Help\' covers assistance or guidance requests for the commands of the chatbot
+    f"""My model is trained to classify text into seven categories: Facts, Track, Status, Schedule, Interviewer,Support and Help. Each category represents a type of inquiry or request often encountered in a professional or educational setting. \'Facts\' pertains to informational content about a company or subject. \'Track\' relates to pathways or progress in a program or system. \'Status\' is for updates or current states of applications or projects. \'Schedule\' involves timings and arrangements of events or meetings. \'Interviewer\' includes queries about the personnel involved in interviews. Lastly, \'Help\' covers assistance or guidance requests for the commands of the chatbot
 
 input: Would you mind provide some facts to me about MathWorks?
 output: Facts
@@ -110,6 +110,26 @@ output: Schedule
 input: Please tell us my track.
 
 output: Track
+
+input: Can you give me the customer support form 
+
+Output: Support
+
+input: I want to contact the customer support 
+
+Output: Support 
+
+input: How can i get support ?
+
+Output: Support
+
+input: How can i raise an issue with customer support 
+
+Output: Support
+
+input: What is a way i can contact support? 
+
+Output: Support
 
 input: {text_to_search}
 
