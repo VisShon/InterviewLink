@@ -19,7 +19,7 @@ function Navbar() {
 			{!route.startsWith('/admin')?
 			<nav className="flex w-[50%] p-2 rounded-xl items-center justify-between font-[400] text-[#6f1f6b] px-10  z-50 overflow-x-hidden bg-main">
 				<Link 
-					href={'/'} 
+					href={'/profile'} 
 					className="flex flex-col">
 					<Image
 						src={'/logo.svg'}
@@ -49,7 +49,7 @@ function Navbar() {
 				</div>
 
 
-				<Link href={'/'} className=" flex flex-col relative">
+				<Link href={'/profile'} className=" flex flex-col relative">
 					<Image 
 						className='rounded-full'
 						src={image?image:'/profile.svg'} 
