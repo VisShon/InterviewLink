@@ -8,9 +8,20 @@ import { decode } from 'jsonwebtoken'
 import { useState, useEffect } from 'react'
 import { useQuery } from '@apollo/client'
 
-  // BasicDetails.js
-  // BasicDetails.js
-const BasicDetails = ({ name, role, location, email, contactNo }) => {
+
+const SectionWithAddNew = ({ title, onAddNew, children }) => {
+return (
+	<div className="flex justify-between items-center text-left relative bg-[#ffffff83] rounded-xl w-full p-5 shadow-sm my-3 text-[#898989]">
+	<h1 className="text-main font-bold text-xl ml-3 mb-3">{title}</h1>
+	<button className="border-[1px] text-[#80AFCF] rounded-full p-3" onClick={onAddNew}>
+		{" Add New + "}
+	</button>
+	{children}
+	</div>
+);
+};
+  
+const BasicDetails = ({ name, role, location, email, employeeId }) => {
 	return (
 	  <div className="flex flex-col w-full sticky top-7">
 		<div className="justify-center items-left text-left relative bg-[#ffffff83] rounded-xl w-full p-5 shadow-sm my-3 text-[#898989]">
@@ -23,13 +34,13 @@ const BasicDetails = ({ name, role, location, email, contactNo }) => {
 			  <strong>Role:</strong> {role}
 			</div>
 			<div className='ml-6'>
-			  <strong>Location:</strong> {location}
+			  <strong>Location:</strong> {"Bengaluru"}
 			</div>
 			<div className='ml-6'>
 			  <strong>Email:</strong> {email}
 			</div>
 			<div className='ml-6'>
-			  <strong>Contact No.:</strong> {contactNo}
+			  <strong>Employee ID:</strong> {employeeId}
 			</div>
 		  </div>
 		</div>
@@ -46,50 +57,46 @@ const BasicDetails = ({ name, role, location, email, contactNo }) => {
   
   
   // WorkExperienceSection.js
-  const WorkExperienceSection = () => {
+const WorkExperienceSection = ({skills}) => {
+	const [showInput, setShowInput] = useState(false);
+	const [newSkill, setNewSkill] = useState('');
+	const [skillsList, setSkillsList] = useState(skills || []);
+
+	const handleAddNew = () => {
+		setShowInput(true);
+	};
+
+	const handleInputKeyPress = (event) => {
+		if (event.key === 'Enter' && newSkill.trim() !== '') {
+		setSkillsList([...skillsList, newSkill]);
+		setNewSkill('');
+		}
+	};
 	return (
 		<div className="flex flex-col w-full sticky top-7">
-		  <div className="justify-center items-left text-left relative bg-[#ffffff83] rounded-xl w-full p-5 shadow-sm my-3 text-[#898989]">
-			<h1 className="text-main font-bold text-xl ml-3 mb-3">Skills</h1>
-		  </div>
-		  <div className="justify-center items-left text-left relative bg-[#ffffff83] rounded-xl w-full p-5 shadow-sm my-3 text-[#898989]">
-			<h1 className="text-main font-bold text-xl ml-3 mb-3">Experience</h1>
-		  </div>
+		  <SectionWithAddNew title="Skills" onAddNew={handleAddNew}>
+			{showInput && (
+			  <input
+				type="text"
+				placeholder="Enter new skill"
+				value={newSkill}
+				onChange={(e) => setNewSkill(e.target.value)}
+				onKeyPress={handleInputKeyPress}
+			  />
+			)}
+	
+			{skills?.map((skill, index) => (
+			  <div
+				key={index}
+				className="flex justify-between items-center text-left relative bg-[#ffffff83] rounded-xl w-full p-5 shadow-sm my-3 text-[#898989]"
+			  >
+				<div>{skill}</div>
+			  </div>
+			))}
+		  </SectionWithAddNew>
+		  <SectionWithAddNew title="Work Experience"></SectionWithAddNew>
 		</div>
-	  );
-  };
-  
-  // EducationDetailsSection.js
-  const EducationDetailsSection = () => {
-	return (
-		<div className="flex justify-between items-center text-left relative bg-[#ffffff83] rounded-xl w-full p-5 shadow-sm my-3 text-[#898989]">
-			<h1 className="text-main font-bold text-xl ml-3 mb-3">Most Recent Education</h1>
-			<button className="border-[1px] text-[#80AFCF] rounded-full p-3">{" Add New + "}</button>
-      	</div>
-	);
-  };
-  
-  // ProjectsSection.js
-  const ProjectsSection = () => {
-	return (
-		<div className="flex justify-between items-center text-left relative bg-[#ffffff83] rounded-xl w-full p-5 shadow-sm my-3 text-[#898989]">
-			<h1 className="text-main font-bold text-xl ml-3 mb-3">Projects</h1>
-			<button className="border-[1px] text-[#80AFCF] rounded-full p-3">{" Add New + "}</button>
-      	</div>
-	);
-  };
-  
-  // ResumeDocsSection.js
-  const ResumeDocsSection = () => {
-	return (
-		<div className="flex flex-col w-full sticky top-7">
-		  <div className="justify-center items-left text-left relative bg-[#ffffff83] rounded-xl w-full p-5 shadow-sm my-3 text-[#898989]">
-			<h1 className="text-main font-bold text-xl ml-3 mb-3">Resumes</h1>
-		  </div>
-		  <div className="justify-center items-left text-left relative bg-[#ffffff83] rounded-xl w-full p-5 shadow-sm my-3 text-[#898989]">
-			<h1 className="text-main font-bold text-xl ml-3 mb-3">Certificates</h1>
-		  </div>
-		</div>
+
 	  );
   };
   
@@ -143,19 +150,24 @@ export default function Profile({id}) {
 						// location={managerData?.location}
 						email={managerData?.email}
 						// contactNo={managerData?.contactNo}
+						employeeId={managerData?.id}
 					/>
 					)}
 					{selectedButton === 'Work Experience' && (
-						<WorkExperienceSection />
+						<WorkExperienceSection
+							skills={managerData?.skillset} />
 					)}
 					{selectedButton === 'Education Details' && (
-						<EducationDetailsSection />
+						<SectionWithAddNew title="Most Recent Education"></SectionWithAddNew>
 					)}
 					{selectedButton === 'Projects' && (
-						<ProjectsSection />
+						<SectionWithAddNew title="Projects"></SectionWithAddNew>
 					)}
 					{selectedButton === 'Resume, Docs & Write-ups' && (
-						<ResumeDocsSection />
+						<div className="flex flex-col w-full sticky top-7">
+							<SectionWithAddNew title="Resumes"></SectionWithAddNew>
+							<SectionWithAddNew title="Documents/Certificates"></SectionWithAddNew>
+						</div>
 					)}
 				</div>
 			</div>
