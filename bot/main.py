@@ -22,8 +22,6 @@ def start(message):
                  " Hi I will be your buddy throughout this interview process.")
     
 
-
-
 @bot.message_handler(["help"])
 def help(message):
     bot.reply_to(
@@ -46,7 +44,7 @@ def support(message):
         message,
         """
         You can fill the form below to contact customer support : 
-        https://share.hsforms.com/1JQ_BScQBS9GYt6TZ7SXN6Aqhsrr
+https://share.hsforms.com/1JQ_BScQBS9GYt6TZ7SXN6Aqhsrr
         """,
     )
 
@@ -72,28 +70,40 @@ def info(message):
     user_id = str(message.from_user.id)
     bot.reply_to(message, user_id)
 
+# @bot.message_handler(["track"])
+# def get_track(message):
+#     user_id = str(message.from_user.id)
+#     print(user_id)
+#     # create the data object and fill it with response data from API
+#     api_url = 'http://localhost:3000/api/botUpdate?telegram_id=836114955'
+#     response = requests.get(api_url)
+#     # data = response.json()
+#     data_dict = dict(responseData)
+#     bot.reply_to(message, "Your selected track for the interview: " + responseData["track"])  
 @bot.message_handler(["track"])
 def get_track(message):
     user_id = str(message.from_user.id)
-    print(user_id)
     # create the data object and fill it with response data from API
     api_url = 'http://localhost:3000/api/botUpdate?telegram_id=836114955'
     response = requests.get(api_url)
-    # data = response.json()
-    data_dict = dict(responseData)
-    bot.reply_to(message, "Your selected track for the interview: " + responseData["track"])  
-
+    print(response)
+    data = response.json()
+    data_dict = dict(data)
+    for key, value in data_dict.items():
+        if str(value) == user_id:
+            bot.reply_to(message, "Your selected track for the interview: " + data["track"])  
 
 @bot.message_handler(["status"])
 def get_status(message):
     user_id = str(message.from_user.id)
     # create the data object and fill it with response data from API
     api_url = 'http://localhost:3000/api/botUpdate?telegram_id=836114955'
-    # response = requests.get(api_url)
-    # data = response.json() 
-    data_dict = dict(responseData)
-    bot.reply_to(message, "Your status: " + responseData["interview_status"]) 
-
+    response = requests.get(api_url)
+    data = response.json() 
+    data_dict = dict(data)
+    for key, value in data_dict.items():
+        if str(value) == user_id:
+            bot.reply_to(message, "Your status: " + data["interview_status"]) 
 
 @bot.message_handler(["schedule"])
 def get_schedule(message):
@@ -101,8 +111,16 @@ def get_schedule(message):
     # create the data object and fill it with response data from API
     api_url = 'http://localhost:3000/api/botUpdate?telegram_id=836114955'
     response = requests.get(api_url)
-
-    bot.reply_to(message, "Start time : "+responseData["time_start"]+"\nEnd time : " +responseData["time_end"]) 
+    data = response.json() 
+    data_dict = dict(data)
+    for key, value in data_dict.items():
+        if str(value) == user_id:
+            try:
+                temp = data["interviewer_userName"]
+                bot.reply_to(message, "Start time : "+data["time_start"]+"\nEnd time : " +data["time_end"]) 
+            except :
+                bot.reply_to(message , "Interview already done")
+                get_status(message)
 
 
 @bot.message_handler(["interviewer"])
@@ -111,8 +129,14 @@ def get_interviewer_details(message):
     # create the data object and fill it with response data from API
     api_url = 'http://localhost:3000/api/botUpdate?telegram_id=836114955'
     response = requests.get(api_url)
-
-    bot.reply_to(message, "Your Interviewer's name : "+responseData["interviewer_userName"]+"\nEmail id : " +responseData["interviewer_email"])      
+    data = response.json()
+    data_dict = dict(data)
+    for key, value in data_dict.items():
+        if str(value) == user_id:
+            try:
+                bot.reply_to(message, "Your Interviewer's name : "+data["interviewer_userName"]+"\nEMail id : " +data["interviewer_email"])        
+            except:
+                bot.reply_to(message , "No Interview Scheduled");
 
 @bot.message_handler(func=lambda message: True)
 def handle_text(message):
