@@ -1,4 +1,4 @@
-const { getSlots,setSlot } = require('./getSlots.js')
+const { getSlots,setSlot } = require('./SlotsController.js')
 
 function comp(a, b) {
 	return a?.skillset?.length < b?.skillset?.length

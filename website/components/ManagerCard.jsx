@@ -4,10 +4,16 @@ function ManagerCard({image, name, role, selected, setSelected, id, setSlots, ca
 
 	const findSlots = async () => {
 		setSelected(id)
-		const res = await fetch(`http://localhost:8000/slotsAPI?calendarId=${calendarId}&interviewerId=${id}`)
-		const slotsData = await res.json()
-		setSelectedSlot({})
-		return setSlots(slotsData)
+		try{
+			const res = await fetch(`http://localhost:8000/slotsAPI?calendarId=${calendarId}&interviewerId=${id}`)
+			const slotsData = await res.json()
+			setSelectedSlot({})
+			return setSlots(slotsData)
+		}
+		catch(e){
+			alert(e)
+			return
+		}
 	}
 
 	const colourVariants = {

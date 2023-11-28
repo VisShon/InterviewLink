@@ -3,12 +3,38 @@ import { useRouter } from 'next/router'
 import useLocalStorage from '@/utils/useLocalStorage'
 import Image from 'next/image'
 import Link from 'next/link'
+import nProgress from "nprogress"
 
 function Navbar() {
 
 	const router = useRouter()
 	const dp = useLocalStorage('image')
 	const [route,setRoute] = useState(router.asPath)
+	const [loading,setLoading] = useState(false)
+	const [error,setError] = useState('')
+
+	const handleClick = async() => {
+		setLoading(true)
+		const res = await fetch("/api/auth/logout", {
+			method: "post",
+			mode:'cors',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+		})
+		setLoading(false)
+		router.push('/login')
+	}
+	
+	useEffect(() => {
+		if(loading)
+			nProgress.start()
+		if(!loading)
+			nProgress.done(false)
+		if(error){
+			nProgress.done(false)
+		}
+	},[loading])
 
 
 	useEffect(() => {
@@ -56,6 +82,11 @@ function Navbar() {
 						href={'https://share.hsforms.com/1JQ_BScQBS9GYt6TZ7SXN6Aqhsrr'}>
 						Support
 					</Link>
+					<button
+						onClick={handleClick}
+						style={{color:"#9EC2DB"}} >
+						Log Out
+					</button>
 				</div>
 
 
@@ -100,6 +131,11 @@ function Navbar() {
 						href={'https://share.hsforms.com/1JQ_BScQBS9GYt6TZ7SXN6Aqhsrr'}>
 						Support
 					</Link>
+					<button
+						onClick={handleClick}
+						style={{color:"#9EC2DB"}} >
+						Log Out
+					</button>
 				</div>
 
 
