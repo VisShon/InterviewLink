@@ -60,7 +60,7 @@ describe("Website UI Testing", () => {
     cy.get("button").click();
 
 
-    //Test10 admin decision making workflow
+    //Test 10 admin decision making workflow
     cy.get("div > a:nth-of-type(2)").click();
     cy.get("a:nth-of-type(3) p").click();
     cy.get("button.bg-main").click();

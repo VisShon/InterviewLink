@@ -12,7 +12,7 @@ const getSlots = async(calendarId,interviewerId) =>{
 		scopes,
 	})
 
-	client.subject = "mathworks@education-401817.iam.gserviceaccount.com"
+	// client.subject = "mathworks@education-401817.iam.gserviceaccount.com"
 	const calendar = google.calendar({ version: "v3", auth: client })
 	const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
@@ -79,7 +79,7 @@ const setSlot = async(calendarId, start, end) =>{
 		scopes,
 	})
 
-	client.subject = "mathworks@education-401817.iam.gserviceaccount.com"
+	// client.subject = "mathworks@education-401817.iam.gserviceaccount.com"
 	const calendar = google.calendar({ version: "v3", auth: client })
 
 	const res = await calendar.events.insert(
@@ -110,7 +110,8 @@ const setSlot = async(calendarId, start, end) =>{
 			},
 		}
 	)
-	// console.log(res)
+
+	return res
 }
 
 

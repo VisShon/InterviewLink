@@ -1,9 +1,9 @@
 import pandas as pd
 from  text_classifier import predict_text 
-file_path = '../bot/text_classification_dataset.csv'
+file_path = '../bot/bot-test-cases.csv'
 
 itr = 0
-with open('text_classification_dataset.csv', mode='r', encoding='utf-8') as file:
+with open('bot-test-cases.csv', mode='r', encoding='utf-8') as file:
     for line in file:
         if(itr == 0):
             itr+=1
