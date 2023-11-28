@@ -1,7 +1,9 @@
-mutation AddFeeback($create: InterviewRelationInput) {
-  updateInterviews(create: $create) {
-    interviews {
-      id
+mutation AddFeeback($input: [FeedbackCreateInput!]!) {
+  createFeedbacks(input: $input) {
+    feedbacks {
+      interview {
+        id
+      }
     }
   }
 }

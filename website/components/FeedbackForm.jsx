@@ -26,28 +26,26 @@ function FeedbackForm({id}) {
 	const handleFeedbackSubmission = async () =>{
 		await addFeedback({
 			variables:{
-				"create": {
-				  "feedbacks": [{
-					"node": {
-					  "confidence": params[0].value,
-					  "description": remark,
-					  "response": feedback,
-					  "problemSolving": params[1].value,
-					  "spokenSkills": params[2].value,
-					  "teamwork": params[3].value,
-					  "technicalSkills": params[4].value,
-					  "interview": {
-						"connect": {
-							"where": {
-							  "node": {
-								"id": id
-							  }
-							}
+				"input": [
+				  {
+					"confidence": params[0].value,
+					"description": remark,
+					"response": feedback,
+					"problemSolving": params[1].value,
+					"spokenSkills": params[2].value,
+					"teamwork": params[3].value,
+					"technicalSkills": params[4].value,
+					"interview": {
+					  "connect": {
+						"where": {
+						  "node": {
+							"id": id
+						  }
 						}
 					  }
 					}
-				  }]
-				}
+				  }
+				]
 			}
 		})
 	}

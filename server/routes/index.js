@@ -1,7 +1,7 @@
 var express = require('express')
 var router = express.Router()
 const { ScheduleAll,ScheduleOne } = require('../controllers/Scheduler.js')
-const { getSlots,setSlot } = require('../controllers/getSlots.js')
+const { getSlots,setSlot } = require('../controllers/SlotsController.js')
 
 
 router.post('/ocrAPI', function(req, res, next) {
