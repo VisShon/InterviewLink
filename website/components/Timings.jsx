@@ -19,7 +19,6 @@ function Timings({id, name, college,role, timings, degree, status, day}) {
 
 				{status=='ONGOING'?
 					<Link  						
-						target="_blank" 
 						className='w-[20%] py-3 hover:opacity-90 text-center bg-main font-bold text-[white] rounded-xl flex items-center justify-center' 
 						href={`/interview/${id}`}>
 						Start Interview

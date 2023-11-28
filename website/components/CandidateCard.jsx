@@ -10,9 +10,8 @@ function CandidateCard({id,name,college,role,description,status}) {
 		
 		
 		<Link  						
-				target="_blank" 
-				className={`flex flex-col justify-center items-left text-left relative  rounded-xl w-full p-5 shadow-sm mb-5 text-[#898989] hover:shadow-md ${status=='ONGOING'?bgVariants.ongoing:bgVariants.tobeinterviewed}`}
-				href={`/interview/${id}`}>
+			className={`flex flex-col justify-center items-left text-left relative  rounded-xl w-full p-5 shadow-sm mb-5 text-[#898989] hover:shadow-md ${status=='ONGOING'?bgVariants.ongoing:bgVariants.tobeinterviewed}`}
+			href={`/interview/${id}`}>
 			<div className="w-full flex justify-between">
 				<h2 className="text-main text-2xl font-bold">
 					{name+', '+college}

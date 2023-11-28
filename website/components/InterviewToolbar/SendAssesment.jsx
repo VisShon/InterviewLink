@@ -21,6 +21,7 @@ function SendAssesment({name,mail,links}) {
 	return (
 		<button 
 			className="hover:shadow-md  active:opacity-80 flex flex-col bg-secondary rounded-xl p-4 px-10 text-main justify-center items-center w-[35%] h-full"
+			id="Assessment"
 			onClick={assessCandidate}>
 			<Image
 				alt='assessment'

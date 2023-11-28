@@ -22,6 +22,7 @@ function SendInvite({mail,name,links}) {
 	
 	return (
 		<button 
+			id="Meet"
 			className="hover:shadow-md active:opacity-80 flex flex-col bg-secondary rounded-xl p-4 px-10 text-[indigo] justify-center items-center w-[35%] h-full"
 			onClick={inviteCandidate}>
 			<Image

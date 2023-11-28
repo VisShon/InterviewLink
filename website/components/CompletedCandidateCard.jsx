@@ -3,7 +3,6 @@ import Link from "next/link"
 function CompletedCandidateCard({id,name,college,degree,description}) {
 	return (
 		<Link  						
-			target="_blank" 
 			className="flex flex-col justify-center items-left text-left relative bg-[white] rounded-xl w-full p-5 shadow-sm my-5 text-[#898989] hover:shadow-md"
 			href={`/admin/completed/${id}`}>
 			<div className="w-full flex justify-between">

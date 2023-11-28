@@ -61,7 +61,8 @@ export default function Home({id}) {
 				</div>
 
 				<div className='flex flex-col w-[70%]'>
-					{managerData?.interviewList?.map(({candidate,timeStart,timeEnd,id},index)=>{
+					{managerData?.interviewList?.filter(item=>item.candidate.status=='ONGOING')
+					.map(({candidate,timeStart,timeEnd,id},index)=>{
 						const startTime = new Date(timeStart);
 						const endTime = new Date(timeEnd);
 						const startTimeFormatted = startTime.toLocaleTimeString('en-US', { hour12: true });

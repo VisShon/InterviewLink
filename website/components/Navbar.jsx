@@ -83,6 +83,7 @@ function Navbar() {
 						Support
 					</Link>
 					<button
+						id="logoutButton"
 						onClick={handleClick}
 						style={{color:"#9EC2DB"}} >
 						Log Out
@@ -132,6 +133,7 @@ function Navbar() {
 						Support
 					</Link>
 					<button
+						id="logoutButton"
 						onClick={handleClick}
 						style={{color:"#9EC2DB"}} >
 						Log Out
