@@ -14,10 +14,19 @@ function Candidates() {
 	const { loading, error, data } = useQuery(GetInterview,{
 		variables:{
 			"where": {
+			"AND": [
+			{
 				"candidate": {
-				  "status": "TOBEINTERVIEWED"
+				"status": "TOBEINTERVIEWED"
+				},
+				"interviewerAggregate": {
+				"NOT": {
+					"count": 0
 				}
-			}
+				}
+			},
+			]
+		}
 		}
 	})
 

@@ -59,10 +59,10 @@ function Candidates({id}) {
 				if(a?.candidate?.cgpa>b?.candidate?.cgpa&&sort){return -1}
 				else{return 1}
 			})
-			.map(({candidate,interviewId},index)=>(
+			.map(({candidate,id},index)=>(
 				<CandidateCard
 					key={index}
-					id={interviewId}
+					id={id}
 					name={candidate?.name}
 					college={candidate?.college}
 					role={candidate?.track}
