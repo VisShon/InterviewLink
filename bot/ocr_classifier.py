@@ -1,10 +1,10 @@
 import vertexai
 from vertexai.language_models import TextGenerationModel
 
-import json 
-with open('Test.json' , 'r') as file :
-    jsonData = json.load(file)
-print(jsonData['data']['skills'] )
+# import json 
+# with open('Test.json' , 'r') as file :
+#     jsonData = json.load(file)
+# print(jsonData['data']['skills'] )
 
 def predict_text(text_to_search):
 # text_to_search = "can you help me with the commands?"
@@ -171,4 +171,4 @@ output:
     )
     return response.text
 
-print(predict_text(jsonData['data']['skills']))
+# print(predict_text(jsonData['data']['skills']))
