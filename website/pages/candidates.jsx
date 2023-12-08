@@ -19,7 +19,6 @@ function Candidates({id}) {
 		}
 	})
 
-
 	useEffect(() => {
 		if(loading){
 			nProgress.start()
@@ -33,9 +32,9 @@ function Candidates({id}) {
 		}
 	},[loading])
 
-
 	return (
 		<main className="w-screen h-auto relative justify-center items-center flex flex-col p-10">
+
 			<div className="flex w-full justify-between h-[5%] mb-10 z-20 ">
 				<button
 					className="bg-main rounded-xl p-2 text-secondary hover:shadow-md active:opacity-95 w-[10%]"

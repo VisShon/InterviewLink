@@ -1,18 +1,20 @@
-import AdminManagerToolbar from '@/components/AdminManagerToolbar'
-import CandidateSlot from '@/components/CandidateSlot'
-import FreeSlot from '@/components/FreeSlot'
+import AdminManagerToolbar from "@/components/AdminManagerToolbar"
+import UploaderToolbar from "@/components/AdminUploadToolbar"
+import CandidateSlot from "@/components/CandidateSlot"
+import FreeSlot from "@/components/FreeSlot"
 import ManagerCard from "@/components/ManagerCard"
 
-import GetInterviewers from '@/apollo/query/getInterviewers.graphql'
-import GetCandidates from '@/apollo/query/getCandidates.graphql'
+import GetInterviewers from "@/apollo/query/getInterviewers.graphql"
+import GetCandidates from "@/apollo/query/getCandidates.graphql"
 
-import { useState, useEffect } from 'react'
-import { useQuery } from '@apollo/client'
-import nProgress from 'nprogress'
+import { useState, useEffect } from "react"
+import { useQuery } from "@apollo/client"
+import nProgress from "nprogress"
+
 
 function admin() {
 	const [managersData, setManagersData] = useState([])
-	const [managerGraderLink, setManagerGraderLink] = useState('')
+	const [managerGraderLink, setManagerGraderLink] = useState("")
 	const [candidates, setCandidates] = useState([])
 	const [slots, setSlots] = useState([])
 
@@ -29,7 +31,8 @@ function admin() {
 
 	const [selectedManager,setSelectedManager] = useState(managersData[0]?.id)
 	const [selectedSlot,setSelectedSlot] = useState({})
-	const [selectedCandidate,setSelectedCandidate] = useState('')
+	const [selectedCandidate,setSelectedCandidate] = useState("")
+
 
 	useEffect(()=>{
 		const graderLink = managersData?.find(manager=>manager?.id==selectedManager)?.graderLink
@@ -51,7 +54,8 @@ function admin() {
 
 	
 	return (
-		<div className='w-screen h-[80%] flex items-center justify-between p-2 px-5'>
+		<div className="w-screen h-[80%] flex items-center justify-between p-2 px-5">
+
 			<div className="p-5 bg-secondary rounded-2xl w-[30%] h-[80vh] overflow-y-clip flex flex-col gap-5">
 				{managersData?.map((manager, index)=>(
 					<ManagerCard
@@ -68,8 +72,12 @@ function admin() {
 					/>
 				))}
 			</div>
-			<div className='flex flex-col gap-10 w-[70%] px-8 overflow-x-clip'>
-				<div className='w-full h-[20vh] flex flex-row gap-5 overflow-x-scroll'>
+
+			<div className="flex flex-col gap-10 w-[70%] px-8 overflow-x-clip h-[80vh]">
+
+				<UploaderToolbar/>
+
+				<div className="w-full h-[20vh] flex flex-row gap-5 overflow-x-scroll">
 					{selectedManager&&slots&&
 					slots?.map((slot,index)=>(
 						<FreeSlot
@@ -82,10 +90,11 @@ function admin() {
 						/>
 					))}
 				</div>
-				<div className='w-full h-[43vh] rounded-2xl flex flex-col gap-7 overflow-y-scroll'>
+
+				<div className="w-full h-[43vh] rounded-2xl flex flex-col gap-7 overflow-y-scroll">
 					{!selectedManager&&<p className="text-main select-none">Please select a manager</p>}					
 					{selectedManager&&
-						candidates?.filter(candidate=>candidate.status=='TOBEINTERVIEWED')
+						candidates?.filter(candidate=>candidate.status=="TOBEINTERVIEWED")
 						.map((candidate,index)=>(
 							<CandidateSlot
 								key={index}
@@ -98,6 +107,8 @@ function admin() {
 							/>
 						))}
 				</div>
+
+
 				<AdminManagerToolbar
 					selectedCandidate={selectedCandidate}
 					selectedManager={selectedManager}

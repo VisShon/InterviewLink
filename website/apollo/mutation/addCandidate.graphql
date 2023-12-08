@@ -1,12 +1,10 @@
-mutation Mutation($input: [CandidateCreateInput!]!) {
+mutation AddCandidate($input: [CandidateCreateInput!]!) {
   createCandidates(input: $input) {
     candidates {
       id
-      name
     }
   }
 }
-
 # {
 #   "input": [
 #     {

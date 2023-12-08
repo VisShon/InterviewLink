@@ -3,6 +3,8 @@ import CompletedCandidateCard from "@/components/CompletedCandidateCard"
 import GetInterview from '@/apollo/query/getInterviewCompleted.graphql'
 import nProgress from "nprogress"
 import { decode } from "jsonwebtoken"
+import Image from "next/image"
+import { json2csv } from "json-2-csv"
 import { useState,useEffect } from "react"
 import { useQuery } from "@apollo/client"
 
@@ -31,6 +33,28 @@ function Candidates() {
 	})
 
 	console.log(data,error)
+
+	const exportCSV = async () => {
+		const candidatesData = candidates.map(interview=>{
+			return{
+				name:interview?.candidate?.name,
+				status:interview?.candidate?.status,
+				track:interview?.candidate?.track,
+				college:interview?.candidate?.college,
+				degree:interview?.candidate?.degree,
+				email:interview?.candidate?.email,
+				feedback:interview?.feedbacks[0]?.description
+			}
+		})
+
+		const csv  = json2csv(candidatesData)
+		const blob = new Blob([csv], { type: ".csv" })
+		const url = window.URL.createObjectURL(blob);
+		const link = document.createElement('a');
+		link.href = url;
+		link.download = 'candidates.csv';
+		link.click();
+	}
 	
 
 	useEffect(() => {
@@ -49,11 +73,25 @@ function Candidates() {
 
 	return (
 		<main className="w-screen h-auto relative justify-center items-center flex flex-col p-10">
-			<div className="flex w-full justify-between h-[5%] mb-10 z-20 ">
+			<div className="flex w-full justify-start gap-10 h-[5%] mb-10 z-20 ">
 				<button
 					className="bg-main rounded-xl p-2 text-secondary hover:shadow-md active:opacity-95 w-[10%]"
 					onClick={()=>setSort(prev=>!prev)}>
 					Sort
+				</button>
+				<button 
+					className="text-[0.75rem] hover:shadow-md  active:opacity-80 flex flex-col bg-secondary rounded-xl text-main justify-center items-center w-[8%] gap-2 h-[60%]  cursor-pointer py-1"
+					onClick={exportCSV}
+					id="Assessment"
+				>
+					<Image
+						alt="assessment"
+						src={"/download.svg"}
+						height={20}
+						width={20}
+						className="w-[1.5rem] "
+					/>
+					<p>Export CSV</p>
 				</button>
 				<Search
 					searchParam={searchParam}

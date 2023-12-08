@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import UpdateCandidateInterview from '@/apollo/mutation/updateCandidateInterview.graphql'
 
 function AutoScheduleButton({candidatesData, interviewersData}) {
+
 	const [updateCandidateInterview, {error, loading, data}]  = useMutation(UpdateCandidateInterview)
 
 	const autoScheduleCandidates = async () =>{
@@ -20,8 +21,19 @@ function AutoScheduleButton({candidatesData, interviewersData}) {
 			})
 
 			const finalInterviews = await res.json()
-			finalInterviews?.forEach((interview)=>{
-				candidateAutoSchedule(interview.candidateId, interview.interviewerId, interview.timestart, interview.timeend);
+			finalInterviews?.forEach(async (interview)=>{
+
+				const interviewer = await interviewersData?.find((interviewer) => 
+					interviewer.id==interview?.interviewerId
+				)
+
+				return await candidateAutoSchedule(
+					interview?.candidateId, 
+					interview?.interviewerId, 
+					interview?.start, 
+					interview?.end,
+					interviewer?.graderLink
+				)
 			})
 		}
 		catch(e){
@@ -30,53 +42,64 @@ function AutoScheduleButton({candidatesData, interviewersData}) {
 		}
 	}
 
-	const candidateAutoSchedule = async (candidateId, managerId, timestart, timeend) =>{
-			console.table({
-					candidateId,
-					managerId,
-					timestart: new Date(timestart),
-					timeend: new Date(timeend),
-			})
+	const candidateAutoSchedule = async (candidateId, interviewerId, start, end, graderLink) =>{
+		
+		try{
+			const links = [`https://meet.google.com/lookup/${"Mathworks-"+candidateId}`,graderLink]
+			const admin = process.env.NEXT_PUBLIC_NEXT_PUBLIC_ADMIN_ID
+	
+			// console.log(candidateId, interviewerId, start, end, links)
 			await updateCandidateInterview({
-					variables:{
-							"where": {
-								"candidateId": candidateId,
-							},
-							"update": {
-								"status": "ONGOING"
-							},
-							"create": {
-								"interviewList": [
-									{
-										"node": {
-											"admin": process.env.NEXT_PUBLIC_NEXT_PUBLIC_ADMIN_ID,
-											"candidate": {
-												"connect": {
-													"where": {
-														"node": {
-															"candidateId": candidateId
-														}
-													}
+				variables:{
+					"where": {
+						"id": candidateId
+					},
+	
+					"update": {
+						"status": "ONGOING"
+					},
+	
+					"create": {
+						"interviewList":[
+							{
+								"node": {
+									"admin": admin,
+		
+									"candidate": {
+										"connect": {
+											"where": {
+												"node": {
+													"id": candidateId
 												}
-											},
-											"interviewer": {
-												"connect": {
-													"where": {
-														"node": {
-															"interviewerId": managerId
-														}
-													}
-												}
-											},
-											"releventLinks": ['link'],
-											"timeEnd": new Date(timestart),
-											"timeStart": new Date(timeend)
+											}
 										}
-									}
-								]
+									},
+		
+									"interviewer": {
+										"connect": {
+											"where": {
+												"node": {
+													"id": interviewerId
+												}
+											}
+										}
+									},
+									
+									"links": links,
+									"timeEnd": end,
+									"timeStart": start
+								}
 							}
+						]
 					}
+				}
 			})
+	
+			return alert("Done")
+		}
+		catch(e){
+			return alert(error)
+		}
 	}
 
 	useEffect(() => {

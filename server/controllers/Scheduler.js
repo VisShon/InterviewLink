@@ -107,7 +107,7 @@ function schedulingAlgo(candidates, interviewers, freeSlots) {
 				"candidateId":id,
 				"interviewerId":interviewerId,
 				"start":slots.at(0)[0],
-				"end":slots.at(0)[1]
+				"end":slots.at(0)[1],
 			})
 			
 			freeSlots.set(interviewerId,slots.slice(1))
