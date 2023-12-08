@@ -1,114 +1,138 @@
 const { getSlots,setSlot } = require('./SlotsController.js')
 
-function comp(a, b) {
-	return a?.skillset?.length < b?.skillset?.length
-}
-
-function convertTime(timeString){
-	let currentDate = new Date()
-	let [hour, minute] = timeString.split(':').map(part => parseInt(part))
-	let convertedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), hour, minute, 0) 
-	let formattedDate = convertedDate.toLocaleString('en-US', {
-		month: 'long',
-		day: 'numeric',
-		year: 'numeric',
-		hour: 'numeric',
-		minute: 'numeric',
-		second: 'numeric'
-		}).replaceAll(' AM', '').replaceAll(' PM', '').replaceAll(' at', '')
-	return formattedDate   
-}
-
-function getCandidatesFromJSON(candidates){
-	let candidateMap = {}
-	candidates?.forEach(candidate => {
-	candidateMap[candidate?.candidateId] = candidate.track
-	})
-	return candidateMap
-}
-
-function getInterviewersFromJSON(interviewers){
-	let interviewerMap={}
-	interviewers?.forEach(interviewer=>{
-		interviewerMap[interviewer?.interviewerId]=interviewer?.skillset
-	})
-	return interviewerMap
-}
-
-function getInterviewerFreeSlots(freeSlotsJSON){
-	let freeSlotsMap={}
-	freeSlotsJSON.forEach(freeSlot=>{
-		if(!freeSlotsMap[freeSlot.interviewerId]){
-			freeSlotsMap[freeSlot.interviewerId]=[]
-		}
-		freeSlotsMap[freeSlot.interviewerId].push([convertTime(freeSlot.timestart),convertTime(freeSlot.timeend)])
-	})
-	return freeSlotsMap
-}
-
-function schedulingAlgo1(candidates, interviewers, freeSlots) {
-	let interviewersSorted = Object.entries(interviewers)
-	let tracks = {}
+function getCandidates(candidatesData){
 	
-	for (let [candidateId, track] of Object.entries(candidates)) {
-		if (!tracks[track]) {
-			tracks[track] = []
-		}
-		tracks[track].push(candidateId)
+	let candidates = {
+		technicalCandidates: {},
+		hrCandidates: {}
 	}
 
-	interviewersSorted.sort(comp)
+	candidatesData?.forEach(candidate => {
+		switch(candidate.track){
+			case "HR":
+				candidates.hrCandidates[candidate?.id] = candidate.skillset
+			case "TECHNICAL":
+				candidates.technicalCandidates[candidate?.id] = candidate.skillset
+			default:
+				candidates.technicalCandidates[candidate?.id] = candidate.skillset
+		}
+	})
+
+
+	return candidates
+}
+
+function getInterviewers(interviewersData){
+
+	let interviewers={
+		technicalInterviewers: {},
+		hrInterviewers: {}
+	}
+
+	interviewersData?.forEach(interviewer=>{
+		switch(interviewer.role){
+			case "Human Resources":
+				interviewers.hrInterviewers[interviewer?.id] = interviewer.skillset
+			default:
+				interviewers.technicalInterviewers[interviewer?.id] = interviewer.skillset
+		}
+	})
+	return interviewers
+}
+
+async function getFreeSlots(interviewersData){
+
+	let freeSlots = new Map()
+
+	for (interviewer of interviewersData){
+
+		
+		const res = await getSlots(interviewer?.calendarId,interviewer?.id)
+
+		if(!freeSlots.has(interviewer?.id))
+			freeSlots.set(interviewer?.id,[])
+
+		const freeSlot = res.map(slot => [slot?.timestampStart,slot?.timestampEnd])
+		freeSlots.set(interviewer?.id,freeSlot)
+	}
+
+	return freeSlots
+}
+
+function similarityIndex (set1,set2){
+	const intersection = new Set([...set1].filter(x => set2.has(x)));
+    const union = new Set([...set1, ...set2]);
+    return intersection.size / union.size;
+}
+
+
+
+function schedulingAlgo(candidates, interviewers, freeSlots) {
+	
+	let skillsetMap = new Map()
 	let interviews=[]  
 
-	for (let [interviewerId, skillset] of interviewersSorted) {
-		if(!freeSlots[interviewerId]) continue
-		for (let s of freeSlots[interviewerId]) {
-			for (let j = 0 ; j < skillset?.length ;j++) {
-				if(!tracks[skillset[j]]) continue
-				if (tracks[skillset[j]].length !== 0) {
-					let candidateId = tracks[skillset[j]].pop()
-					interviews.push({
-						"candidateId":candidateId,
-						"interviewerId":interviewerId,
-						"duration":60,
-						"timestart":s[0],
-						"timeend":s[1]
-					})
-					break
-				}
+	const candidatesSorted = Object.entries(candidates)
+		?.sort((a, b)=>{
+		return a?.skillset?.length - b?.skillset?.length
+	})
+	
+	for (let [id, skillset] of Object.entries(interviewers)) {
+		if (!skillsetMap.has(skillset))
+			skillsetMap.set(skillset,0)
+
+		skillsetMap.set(skillset,id)
+	}
+
+	for (let [id, skillset] of candidatesSorted) {
+
+		let maxSimilarity = 0;
+		let mostSimillarSkillSet = null;
+
+		for (const interviewerSkillset of skillsetMap.keys()) {
+			const similarity = similarityIndex(new Set(interviewerSkillset), new Set(skillset));
+			if (similarity > maxSimilarity) {
+				maxSimilarity = similarity;
+				mostSimillarSkillSet = interviewerSkillset;
 			}
 		}
+
+		const interviewerId = skillsetMap.get(mostSimillarSkillSet)
+		const slots  = freeSlots.get(interviewerId)
+		
+
+		if(slots){
+			
+			interviews.push({
+				"candidateId":id,
+				"interviewerId":interviewerId,
+				"start":slots.at(0)[0],
+				"end":slots.at(0)[1]
+			})
+			
+			freeSlots.set(interviewerId,slots.slice(1))
+			candidatesSorted.splice(id,1)
+		}
 	}
+	
 	return interviews
 }
 
 
-const ScheduleAll = async(candidatesData, interviewersData) =>{
-	let candidatesDataArray = getCandidatesFromJSON(candidatesData.candidates)
-	let interviewersDataArray = getInterviewersFromJSON(interviewersData.interviewers)
-	let slotsData = []
-	
+const ScheduleAll = async(candidatesData, interviewersData) =>{	
+	if(candidatesData == undefined||interviewersData == undefined)
+		return []
 
-	// let freeSlotsDataArray = getInterviewerFreeSlots(slotsData)
-	// let interviewSchedule = schedulingAlgo1(candidatesDataArray, interviewersDataArray, freeSlotsDataArray)
-	// return interviewSchedule
+	const {technicalCandidates, hrCandidates} = getCandidates(candidatesData)
+	const {technicalInterviewers, hrInterviewers} = getInterviewers(interviewersData)
+	const freeSlots = await getFreeSlots(interviewersData)
 
-	//no hr should be scheduled in this case
-}
+	const technicalSchedule = schedulingAlgo(technicalCandidates,technicalInterviewers,freeSlots)
+	const hrSchedule = schedulingAlgo(hrCandidates,hrInterviewers,freeSlots)
 
-
-const ScheduleOne = async(candidateData, interviewersData) =>{
-	// let candidatesDataArray = getCandidatesFromJSON(candidatesData.candidates)
-	// let interviewersDataArray = getInterviewersFromJSON(interviewersData.interviewers)
-
-	// let freeSlotsDataArray = getInterviewerFreeSlots(slotsData)
-	// let interviewSchedule = schedulingAlgo1(candidatesDataArray, interviewersDataArray, freeSlotsDataArray)
-	// return interviewSchedule
-
-	//HR should be handled
+	return [...technicalSchedule, ...hrSchedule]
 }
 
 module.exports ={
-	ScheduleAll,
-	ScheduleOne
+	ScheduleAll
 }

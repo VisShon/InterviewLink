@@ -1,17 +1,11 @@
 var express = require('express')
 var router = express.Router()
-const { ScheduleAll,ScheduleOne } = require('../controllers/Scheduler.js')
+const { ScheduleAll } = require('../controllers/Scheduler.js')
 const { getSlots,setSlot } = require('../controllers/SlotsController.js')
 
 
 router.post('/ocrAPI', function(req, res, next) {
 	//for bulk upload
-})
-
-router.post('/schedulerAPI', async function(req, res, next) {
-	const interviewData = await ScheduleOne(req.body.candidateData, req.body.interviewersData)
-	res.send(interviewData)
-	next()
 })
 
 router.get('/schedulerAPI', async function(req, res, next) {

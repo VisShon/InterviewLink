@@ -1,9 +1,12 @@
 const credentials =  require("../credentials.json")
 const { google } = require("googleapis")
-const {addWeeks,addMinutes} =  require("date-fns")
+const {addWeeks,addMinutes, addDays} =  require("date-fns")
 const { v4: uuidv4 } = require('uuid');
 
 const getSlots = async(calendarId,interviewerId) =>{
+
+	if(calendarId== undefined||interviewerId == undefined)
+		return [];
 
 	const scopes = ["https://www.googleapis.com/auth/calendar"]
 
@@ -36,8 +39,8 @@ const getSlots = async(calendarId,interviewerId) =>{
 
 	let availableSlots = []
 	const workdayStart = new Date()
-	const workdayEnd = new Date()
-	workdayEnd.setHours(21, 0, 0, 0)
+	const workdayEnd =  addDays(new Date(),1 )
+	workdayEnd.setHours(3, 0, 0, 0)
 
 	let currentSlotStart = new Date(workdayStart)
 	let id = 0
@@ -50,6 +53,7 @@ const getSlots = async(calendarId,interviewerId) =>{
 			availableSlots.push({ 
 				id: id,
 				calendarId: calendarId,
+				interviewerId:interviewerId,
 				interviewerStatus: "Available",
 				start: currentSlotStart.toLocaleTimeString("en-IN", { timeZone: "Asia/Kolkata" }),
 				end: currentSlotEnd.toLocaleTimeString("en-IN", { timeZone: "Asia/Kolkata" }),
@@ -63,8 +67,6 @@ const getSlots = async(calendarId,interviewerId) =>{
 
 		currentSlotStart.setTime(currentSlotEnd.getTime())
 	}
-
-	console.log(appointments)
 
 	return availableSlots
 }
