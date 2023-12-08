@@ -138,4 +138,3 @@ output:
     **parameters
     )
     return response.text
-print(predict_text("can you tell me about the company"))
