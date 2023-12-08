@@ -2,17 +2,32 @@ import { useMutation } from "@apollo/client"
 import nProgress from "nprogress"
 import { useState, useEffect } from "react"
 import UpdateCandidateInterview from '@/apollo/mutation/updateCandidateInterview.graphql'
-import { AutoSchedule } from "@/utils/schedule"
 
 function AutoScheduleButton({candidatesData, interviewersData}) {
 	const [updateCandidateInterview, {error, loading, data}]  = useMutation(UpdateCandidateInterview)
 
 	const autoScheduleCandidates = async () =>{
-		const finalInterviews = 
-		await AutoSchedule(candidatesData, interviewersData)
-		finalInterviews?.forEach((interview)=>{
+		try{
+			const res = await fetch(`http://localhost:8000/schedulerAPI`,{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body:JSON.stringify({
+					candidatesData:candidatesData,
+					interviewersData:interviewersData
+				})
+			})
+
+			const finalInterviews = await res.json()
+			finalInterviews?.forEach((interview)=>{
 				candidateAutoSchedule(interview.candidateId, interview.interviewerId, interview.timestart, interview.timeend);
-		})
+			})
+		}
+		catch(e){
+			alert(e)
+			return
+		}
 	}
 
 	const candidateAutoSchedule = async (candidateId, managerId, timestart, timeend) =>{

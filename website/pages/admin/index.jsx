@@ -104,8 +104,8 @@ function admin() {
 					selectedSlot={selectedSlot}
 					slots={slots}
 					managerGraderLink={managerGraderLink}
-					interviewersData = {interviewersData}
-					candidatesData = {candidatesData}
+					interviewersData = {interviewersData?.interviewers}
+					candidatesData = {candidatesData?.candidates}
 				/>
 			</div>
 		</div>

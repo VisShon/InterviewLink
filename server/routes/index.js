@@ -8,9 +8,9 @@ router.post('/ocrAPI', function(req, res, next) {
 	//for bulk upload
 })
 
-router.get('/schedulerAPI', async function(req, res, next) {
+router.post('/schedulerAPI', async function(req, res, next) {
 	const interviewSchedule = await ScheduleAll(req.body.candidatesData, req.body.interviewersData)
-	res.send(interviewSchedule)
+	res.json(interviewSchedule)
 	next()
 })
 
