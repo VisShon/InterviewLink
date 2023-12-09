@@ -39,7 +39,7 @@ export default function UploadResumeButton() {
       const formData = new FormData();
       formData.append('file', selectedFile);
 
-      fetch('https://resumeocr.onrender.com/resumetojson/', {
+      fetch('https://resumeocr-production.up.railway.app/resumetojson/', {
         method: 'POST',
         body: formData,
       })
