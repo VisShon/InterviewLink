@@ -9,7 +9,7 @@ function AutoScheduleButton({candidatesData, interviewersData}) {
 
 	const autoScheduleCandidates = async () =>{
 		try{
-			const res = await fetch(`http://localhost:8000/schedulerAPI`,{
+			const res = await fetch(`https://interviewlink-production.up.railway.app/schedulerAPI`,{
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",

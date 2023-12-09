@@ -1,5 +1,6 @@
 query GetInterviewer($where: InterviewerWhere) {
   interviewers(where: $where) {
+    id
     email
     image
     role

@@ -5,7 +5,7 @@ function ManagerCard({image, name, role, selected, setSelected, id, setSlots, ca
 	const findSlots = async () => {
 		setSelected(id)
 		try{
-			const res = await fetch(`http://localhost:8000/slotsAPI?calendarId=${calendarId}&interviewerId=${id}`)
+			const res = await fetch(`https://interviewlink-production.up.railway.app/slotsAPI?calendarId=${calendarId}&interviewerId=${id}`)
 			const slotsData = await res.json()
 			setSelectedSlot({})
 			return setSlots(slotsData)

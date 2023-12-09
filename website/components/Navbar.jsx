@@ -92,7 +92,7 @@ function Navbar() {
 
 
 				<Link 
-					target="_blank" href={'/'} className=" flex flex-col relative">
+					href={'/profile'} className=" flex flex-col relative">
 					<Image 
 						className='rounded-full'
 						src={dp?dp:'/profile.svg'} 

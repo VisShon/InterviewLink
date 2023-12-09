@@ -67,7 +67,7 @@ function ScheduleButton({managerId,candidateId,slot,managerGraderLink}) {
 
 	const scheduleInterview = async () => {
 		const res = await fetch(
-			`http://localhost:8000/slotsAPI?calendarId=${slot.calendarId}&start=${slot.timestampStart}&end=${slot.timestampEnd}`,
+			`https://interviewlink-production.up.railway.app/slotsAPI?calendarId=${slot.calendarId}&start=${slot.timestampStart}&end=${slot.timestampEnd}`,
 			{
 				method: 'POST',
 			}
