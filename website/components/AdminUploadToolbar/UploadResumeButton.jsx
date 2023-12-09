@@ -13,11 +13,41 @@ const customStyles = {
   },
 };
 
+
 export default function UploadResumeButton() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [responseText, setResponseText] = useState('');
   const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const importCSV = async (e) => {
+      if(responseText === '') return;
+      const candidatesData =  {
+          "cgpa": "8.2",
+          "college": responseText.college,
+          "degree": "BTECH",
+          "email": responseText.email,
+          "image": responseText.image,
+          "name": responseText.name,
+          "skillset": responseText.category,
+          "status": "TOBEINTERVIEWED",
+          "telegramId":  responseText.telegramId?.toString(),
+          "track": responseText.category,
+        }
+      try {
+        await addCandidate({
+          variables:{
+            "input":[...candidatesData]
+          }
+        })
+        console.log(error,data)
+      }
+      catch(e){
+        console.log(e)
+      }
+    alert("Refresh to Update Candidates")
+    return 
+  }
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -47,7 +77,7 @@ export default function UploadResumeButton() {
         .then(data => {
           // Handle the response
           setUploading(false);
-          setResponseText(data.success ? data.message : data.error);
+          setResponseText(data ? data : '');
         })
         .catch(error => {
           setUploading(false);
@@ -63,6 +93,8 @@ export default function UploadResumeButton() {
   const closeModal = () => {
     setModalIsOpen(false);
   };
+
+  console.log(responseText, 'responseText')
 
   return (
     <div>
@@ -90,16 +122,23 @@ export default function UploadResumeButton() {
             onChange={handleFileChange}
             disabled={uploading}
             />
-          {selectedFile && <p>Selected File: {selectedFile.name}</p>}
           {selectedFile && (
             <button onClick={handleUpload} disabled={uploading}>
-              {uploading ? 'Uploading...' : 'Upload Resume'}
+              {uploading ? 'Uploading...' :  'Upload Resume'}
             </button>
           )}
-          {responseText && (
-            <p style={{ color: responseText.includes('success') ? 'green' : 'red' }}>
-              {responseText}
-            </p>
+          {responseText !== '' && (
+            <>
+              <p style={{ color: responseText !== '' ? 'green' : 'red' }}>
+              {responseText?.name}
+            
+              </p>
+              <button 
+              onClick={importCSV}
+              >
+                Import
+              </button>
+            </>
           )}
         </div>
           </div>

@@ -10,7 +10,7 @@ import AddCandidate from "@/apollo/mutation/addCandidate.graphql"
 
 function CSVImport() {
 
-    const [file, setFile] = useState()
+  const [file, setFile] = useState()
 	const imageUploader = useRef()
 
 	const [addCandidate,{error,loading,data}] = useMutation(AddCandidate);
