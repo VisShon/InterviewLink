@@ -66,6 +66,9 @@ function ScheduleButton({managerId,candidateId,slot,managerGraderLink}) {
 	}
 
 	const scheduleInterview = async () => {
+		if(!slot){
+			return alert("Pick a slot")
+		}
 		const res = await fetch(
 			`https://interviewlink-production.up.railway.app/slotsAPI?calendarId=${slot.calendarId}&start=${slot.timestampStart}&end=${slot.timestampEnd}`,
 			{

@@ -29,10 +29,11 @@ function GoButton({interviewId,candidateId,interviewerId,track}) {
 				update: {
 				  candidate: {
 					update: {
-						node: {
-						  status: "SELECTED"
-						}
-					  },
+					  node: {
+						status: newStatus,
+						track: newTrack
+					  }
+					},
 					where: {
 						node: {
 							id: candidateId

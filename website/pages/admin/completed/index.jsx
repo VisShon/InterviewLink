@@ -16,19 +16,27 @@ function Candidates() {
 	const { loading, error, data } = useQuery(GetInterview,{
 		variables:{
 			"where": {
-			"AND": [
-			{
-				"candidate": {
-				"status": "TOBEINTERVIEWED"
-				},
-				"interviewerAggregate": {
-				"NOT": {
-					"count": 0
-				}
-				}
-			},
-			]
-		}
+				"OR":[
+					{"candidate": {
+						"status": "SELECTED"
+					}},
+					{"candidate": {
+						"status": "REJECTED"
+					}},
+					{
+						"AND":[
+							{"candidate": {
+								"status": "TOBEINTERVIEWED"
+							},
+								"interviewerAggregate": {
+								"NOT": {
+									"count": 0
+								}
+							}}
+						]
+					}
+				]
+			}
 		}
 	})
 
@@ -107,7 +115,7 @@ function Candidates() {
 			candidate?.college?.toLowerCase().includes(searchParam)||
 			candidate?.degree?.toLowerCase().includes(searchParam)))
 			.sort((a,b)=>{
-				if(a?.candidate?.cgpa>b?.candidate?.cgpa&&sort){return -1}
+				if(a?.candidate?.status>b?.candidate?.status&&sort){return -1}
 				else{return 1}
 			})
 			.map(({candidate,id},index)=>(
@@ -117,6 +125,7 @@ function Candidates() {
 					name={candidate?.name}
 					college={candidate?.college}
 					degree={candidate?.degree}
+					status={candidate?.status}
 					description={'Lorem ipsum dolor sit amet consectetur. Lacus rutrum egestas sollicitudin viverra faucibus vitae. Vitae mi pellentesque sed nulla tortor ac placerat. Non non vitae auctor semper tristique ipsum blandit sapien.'}
 				/>
 			))}
