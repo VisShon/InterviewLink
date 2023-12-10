@@ -11,6 +11,7 @@ function AutoScheduleButton({candidatesData, interviewersData}) {
 		try{
 			const res = await fetch(`https://interviewlink-production.up.railway.app/schedulerAPI`,{
 				method: "POST",
+				mode: "cors",
 				headers: {
 					"Content-Type": "application/json",
 				},
@@ -33,6 +34,7 @@ function AutoScheduleButton({candidatesData, interviewersData}) {
 					`https://interviewlink-production.up.railway.app/slotsAPI?calendarId=${interviewer?.calendarId}&start=${interview.start}&end=${interview.end}`,
 					{
 						method: 'POST',
+						mode: "cors",
 					}
 				);
 

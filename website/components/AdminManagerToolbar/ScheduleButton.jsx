@@ -73,6 +73,7 @@ function ScheduleButton({managerId,candidateId,slot,managerGraderLink}) {
 			`https://interviewlink-production.up.railway.app/slotsAPI?calendarId=${slot.calendarId}&start=${slot.timestampStart}&end=${slot.timestampEnd}`,
 			{
 				method: 'POST',
+				mode: "cors",
 			}
 		);
 		await candidateSchedule()
