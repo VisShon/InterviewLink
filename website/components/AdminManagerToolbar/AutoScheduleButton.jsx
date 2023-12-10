@@ -21,13 +21,23 @@ function AutoScheduleButton({candidatesData, interviewersData}) {
 			})
 
 			const finalInterviews = await res.json()
-			finalInterviews?.forEach(async (interview)=>{
+			
+			await finalInterviews?.forEach(async (interview)=>{
 
+				console.log(interview)
 				const interviewer = await interviewersData?.find((interviewer) => 
 					interviewer.id==interview?.interviewerId
 				)
 
-				return await candidateAutoSchedule(
+				const res = await fetch(
+					`https://interviewlink-production.up.railway.app/slotsAPI?calendarId=${interviewer?.calendarId}&start=${interview.start}&end=${interview.end}`,
+					{
+						method: 'POST',
+					}
+				);
+
+
+				await candidateAutoSchedule(
 					interview?.candidateId, 
 					interview?.interviewerId, 
 					interview?.start, 
@@ -35,16 +45,18 @@ function AutoScheduleButton({candidatesData, interviewersData}) {
 					interviewer?.graderLink
 				)
 			})
+
+			return alert("Done")
 		}
 		catch(e){
-			alert(e)
-			return
+			return alert(e)
 		}
 	}
 
 	const candidateAutoSchedule = async (candidateId, interviewerId, start, end, graderLink) =>{
 		
 		try{
+			
 			const links = [`https://meet.google.com/lookup/${"Mathworks-"+candidateId}`,graderLink]
 			const admin = process.env.NEXT_PUBLIC_NEXT_PUBLIC_ADMIN_ID
 	
@@ -95,12 +107,13 @@ function AutoScheduleButton({candidatesData, interviewersData}) {
 				}
 			})
 	
-			return alert("Done")
+			return console.log("Done")
 		}
 		catch(e){
-			return alert(error)
+			return console.log(error)
 		}
 	}
+
 
 	useEffect(() => {
 		if(loading){

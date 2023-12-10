@@ -11,10 +11,13 @@ function getCandidates(candidatesData){
 		switch(candidate.track){
 			case "HR":
 				candidates.hrCandidates[candidate?.id] = candidate.skillset
+				break;
 			case "TECHNICAL":
 				candidates.technicalCandidates[candidate?.id] = candidate.skillset
+				break;
 			default:
 				candidates.technicalCandidates[candidate?.id] = candidate.skillset
+				break;
 		}
 	})
 
@@ -33,10 +36,14 @@ function getInterviewers(interviewersData){
 		switch(interviewer.role){
 			case "Human Resources":
 				interviewers.hrInterviewers[interviewer?.id] = interviewer.skillset
+				break;
 			default:
 				interviewers.technicalInterviewers[interviewer?.id] = interviewer.skillset
+				break;
 		}
 	})
+
+	console.log(interviewers)
 	return interviewers
 }
 

@@ -27,9 +27,26 @@ export async function middleware(req) {
 		}
 	}
 
+	//profile path
+	if (pathname == '/profile'){
+		if (jwt == undefined) {
+			req.nextUrl.pathname = '/login';
+			return NextResponse.redirect(req.nextUrl);
+		}
+		try {
+			await verify(jwt.value, process.env.JWT_KEY);
+			const user = await decode(jwt.value)
+			req.nextUrl.pathname = `/profile/${user.id}`
+			return NextResponse.redirect(req.nextUrl);
+
+		} catch (error) {
+			return NextResponse.next();
+		}
+	}
+
 
 	//Manager redirects
-	if (pathname=="/"||(pathname.startsWith("/compile"))||(pathname.startsWith("/candidates"))||(pathname.startsWith("/interview"))){
+	if (pathname=="/"||(pathname.startsWith("/compile"))||(pathname.startsWith("/candidates"))||(pathname.startsWith("/interview"))||(pathname.startsWith("/profile"))){
 		if (jwt == undefined) {
 			req.nextUrl.pathname = '/login';
 			return NextResponse.redirect(req.nextUrl);
@@ -51,23 +68,7 @@ export async function middleware(req) {
 		}
 	}
 
-	//profile path
-	if (pathname.startsWith('/profile')){
-		if (jwt == undefined) {
-			req.nextUrl.pathname = '/login';
-			return NextResponse.redirect(req.nextUrl);
-		}
-		console.log('/profile')
-		try {
-			await verify(jwt.value, process.env.JWT_KEY);
-			const user = await decode(jwt.value)
-			req.nextUrl.pathname = `/profile/${user.id}`
-			return NextResponse.redirect(req.nextUrl);
-
-		} catch (error) {
-			return NextResponse.next();
-		}
-	}
+	
 
 }
 
@@ -82,5 +83,5 @@ export async function decode(token) {
 }
 
 export const config = {
-	matcher: ['/','/interview/:id*','/candidates/:id*','/login', '/compile', '/admin', '/admin/completed', '/profile'],
+	matcher: ['/','/interview/:id*','/candidates/:id*','/login', '/compile', '/admin', '/admin/completed', '/profile', '/profile/:id*'],
 }

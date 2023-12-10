@@ -145,7 +145,7 @@ function Navbar() {
 					target="_blank" href={'/admin'} className=" flex flex-col relative">
 					<Image 
 						className='rounded-full'
-						src={dp?dp:'/profile.svg'} 
+						src={'/profile.svg'} 
 						width={40} 
 						height={40} 
 						alt={'Vantage'} 

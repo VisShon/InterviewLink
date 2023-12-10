@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
+import Image from 'next/image';
+import { useMutation } from "@apollo/client"
+import AddCandidate from "@/apollo/mutation/addCandidate.graphql"
+
 
 const customStyles = {
   content: {
@@ -20,6 +24,8 @@ export default function UploadResumeButton() {
   const [responseText, setResponseText] = useState('');
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
+  const [addCandidate,{error,loading,data}] = useMutation(AddCandidate);
+
   const importCSV = async (e) => {
       if(responseText === '') return;
       const candidatesData =  {
@@ -29,15 +35,17 @@ export default function UploadResumeButton() {
           "email": responseText.email,
           "image": responseText.image,
           "name": responseText.name,
-          "skillset": responseText.category,
+          "skillset": [responseText.category],
           "status": "TOBEINTERVIEWED",
           "telegramId":  responseText.telegramId?.toString(),
-          "track": responseText.category,
+          "track": "TECHNICAL"
         }
       try {
         await addCandidate({
           variables:{
-            "input":[...candidatesData]
+            "input":[
+              candidatesData
+            ]
           }
         })
         console.log(error,data)
@@ -98,13 +106,19 @@ export default function UploadResumeButton() {
 
   return (
     <div>
-      <button 
-			className="text-[0.75rem] hover:shadow-md  active:opacity-80 flex flex-col bg-secondary rounded-xl text-main justify-center items-center"
-			id="Assessment"
-      onClick={openModal}>
-	
-			<p>Upload Resume</p>
-		</button>
+        <button 
+            className="text-[0.75rem] hover:shadow-md  active:opacity-80 flex flex-col bg-secondary rounded-xl text-main justify-center items-center px-2 gap-2 h-[60%]  cursor-pointer"
+            id="Assessment"
+            onClick={openModal}>
+            <Image
+              alt="assessment"
+              src={"/ocr.svg"}
+              height={20}
+              width={20}
+              className="w-[1.5rem] "
+            />
+          <p>Upload Resume</p>
+        </button>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
@@ -112,18 +126,21 @@ export default function UploadResumeButton() {
       >
         <div className=''>
       <div className='justify-end items-end flex'>
-        <button onClick={closeModal}>Close Modal</button>
+        <button className='text-[black]' onClick={closeModal}>X</button>
         </div>
         <br />
-        <div>
+        <div className='flex flex-col gap-10 items-center justify-center p-10 rounded-xl w-full'>
           <input
             type="file"
+            className='flex justify-center w-[80%]'
             accept=".pdf"
             onChange={handleFileChange}
             disabled={uploading}
             />
           {selectedFile && (
-            <button onClick={handleUpload} disabled={uploading}>
+            <button
+              className="border-[1px] rounded-lg p-2 bg-main"  
+              onClick={handleUpload} disabled={uploading}>
               {uploading ? 'Uploading...' :  'Upload Resume'}
             </button>
           )}
@@ -134,6 +151,7 @@ export default function UploadResumeButton() {
             
               </p>
               <button 
+              className="border-[1px] rounded-lg p-2 bg-main"  
               onClick={importCSV}
               >
                 Import

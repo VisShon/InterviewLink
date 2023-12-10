@@ -116,7 +116,7 @@ function admin() {
 					slots={slots}
 					managerGraderLink={managerGraderLink}
 					interviewersData = {interviewersData?.interviewers}
-					candidatesData = {candidatesData?.candidates}
+					candidatesData = {candidates?.filter(candidate=>candidate.status=="TOBEINTERVIEWED")}
 				/>
 			</div>
 		</div>

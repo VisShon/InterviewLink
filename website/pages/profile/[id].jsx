@@ -1,82 +1,24 @@
 import GetInterviewer from '@/apollo/query/getInterviewer.graphql'
+import UpdateInterviewer from '@/apollo/mutation/updateInterviewerSkillset.graphql'
+
+
 import nProgress from 'nprogress'
 import { useState, useEffect } from 'react'
 import { useRouter } from "next/router";
-import { useQuery } from '@apollo/client'
+import { useQuery, useMutation } from '@apollo/client'
+
 import ManagerInfoPanel from '@/components/ManagerInfoPanel'
-
-
-const SectionWithAddNew = ({ title, onAddNew, children }) => {
-	return (
-		<div className="flex justify-between items-center text-left relative bg-[#ffffff83] rounded-xl w-full p-5 shadow-sm my-3 text-[#898989]">
-		<h1 className="text-main font-bold text-xl ml-3 mb-3">{title}</h1>
-		<button className="border-[1px] text-[#80AFCF] rounded-full p-3" onClick={onAddNew}>
-			{" Add New + "}
-		</button>
-		{children}
-		</div>
-	);
-};
-
-  
-  
-  
-const WorkExperienceSection = ({skills}) => {
-
-	const [showInput, setShowInput] = useState(false);
-	const [newSkill, setNewSkill] = useState('');
-	const [skillsList, setSkillsList] = useState(skills || []);
-
-	const handleAddNew = () => {
-		setShowInput(true);
-	};
-
-	const handleInputKeyPress = (event) => {
-		if (event.key === 'Enter' && newSkill.trim() !== '') {
-		setSkillsList([...skillsList, newSkill]);
-		setNewSkill('');
-		}
-	};
-
-
-	return (
-		<div className="flex flex-col w-full sticky top-7">
-			<SectionWithAddNew 
-				title="Skills" 
-				onAddNew={handleAddNew}>
-
-				{showInput && (
-					<input
-						type="text"
-						placeholder="Enter new skill"
-						value={newSkill}
-						onChange={(e) => setNewSkill(e.target.value)}
-						onKeyPress={handleInputKeyPress}
-					/>
-				)}
-		
-				{skills?.map((skill, index) => (
-					<div
-						key={index}
-						className="flex justify-between items-center text-left relative bg-[#ffffff83] rounded-xl w-full p-5 shadow-sm my-3 text-[#898989]">
-						<div>{skill}</div>
-					</div>
-				))}
-
-			</SectionWithAddNew>
-		</div>
-
-	  );
-  };
-  
 
 function Profile() {
 	const router = useRouter();
 	const {id} = router.query;
 
+	const [newSkills, setNewSkills] = useState([])
+	const [showInput, setShowInput] = useState(false)
 	const [managerData, setManagerData] = useState()
 	const [selectedButton, setSelectedButton] = useState('Basic Details');
-	const { loading, error, data } = useQuery(GetInterviewer,{
+	const [updateInterviewer,{error:updateError,loading:updateLoading,data:updateData}] = useMutation(UpdateInterviewer)	
+	const { loading, error, data, refetch } = useQuery(GetInterviewer,{
 		variables:{
 			where: {
 			  id: id
@@ -84,20 +26,37 @@ function Profile() {
 		}
 	})
 
-	console.log(data)
+	const newSkillUpdate = async () => {
+		const newSkillset = [...managerData?.skillset,...newSkills]
+		await updateInterviewer({
+			variables:{
+				"where": {
+				  "id": id
+				},
+				"update": {
+				  "skillset": newSkillset
+				}
+			}
+		})
+		setShowInput(false)
+		router.reload()
+
+	}
+
+	console.log(newSkills)
 
 	useEffect(() => {
-		if(loading){
+		if(loading||updateLoading){
 			nProgress.start()
 		}
-		if(!loading){
+		if(!loading||!updateLoading){
 			nProgress.done(false)
 			setManagerData(data?.interviewers?.at(0))
 		}
-		if(error){
+		if(error||updateError){
 			nProgress.done(false)
 		}
-	},[loading])
+	},[loading,updateLoading])
 
 
 	return (
@@ -117,8 +76,8 @@ function Profile() {
 				<div className='flex flex-col w-[70%] px-8'>
 					{
 						selectedButton === 'Basic Details' && (
-							<div className="flex flex-col w-full sticky top-7">
-								<div className="justify-center items-left text-left relative bg-[#ffffff83] rounded-xl w-full p-5 shadow-sm my-3 text-[#898989]">
+							<div className="flex flex-col w-full sticky top-7 mb-3">
+								<div className="justify-center items-left text-left relative bg-[#ffffff83] rounded-xl w-full p-5 shadow-sm  text-[#898989]">
 									<h1 className="text-main font-bold text-xl mb-3 ml-3">About</h1>
 									<div className="flex flex-col space-y-2">
 										<div className='ml-6'>
@@ -143,9 +102,60 @@ function Profile() {
 						)
 					}
 
-					<WorkExperienceSection 
-						skills={managerData?.skillset} 
-					/>
+					<div className="flex flex-col justify-between items-start text-left relative bg-[#ffffff83] rounded-xl w-full p-5 shadow-sm  text-[#898989]">
+
+						<h1 className="text-main font-bold text-xl ml-3 mb-3">
+							Skills
+						</h1>
+
+						<div className="w-full flex items-start flex-wrap gap-10">
+							{
+								!showInput?
+								<button
+									onClick={()=>setShowInput(true)} 
+									className="border-[1px] text-[#80AFCF] text-center rounded-xl w-[15%] p-2 shadow-sm " >
+									Add New +
+								</button>:
+
+								<div className="border-[1px] text-[#80AFCF] text-center rounded-xl p-1 shadow-sm  flex gap-10  ">
+									<select 
+										className="text-center border-[1px] rounded-lg" 
+										onChange={e=>{
+											if(!newSkills?.includes(e.target.value)&&!managerData?.skillset?.includes(e.target.value))
+												return setNewSkills([...newSkills, e.target.value])
+											else return
+										}}>
+										<option value="product">product</option>
+										<option value="management">management</option>
+										<option value="development">development</option>
+										<option value="design">design</option>
+										<option value="marketing">marketing</option>
+									</select>
+
+									{newSkills.map((skill,index)=>(
+										<div className="border-[1px] rounded-lg p-2  text-center flex items-center relative">
+											{skill}
+										</div>
+									))}
+									
+									<button 
+										className="border-[1px] rounded-lg p-2 bg-main" 
+										onClick={newSkillUpdate}>
+											Update
+									</button>
+								</div>
+							}
+
+							{managerData?.skillset?.map((skill, index) => (
+								<div
+									key={index}
+									className="text-center  bg-[#ffffff83] rounded-xl w-[15%] p-2 shadow-sm  text-[#898989] flex items-center justify-center">
+									{skill}
+								</div>
+							))}
+						</div>
+
+					</div>
 				</div>
 			</div>
 		</div>

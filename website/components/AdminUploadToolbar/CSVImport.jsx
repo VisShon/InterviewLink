@@ -24,10 +24,11 @@ function CSVImport() {
 			setFile(file)
 			const csvString = await file.text()
 			const candidates = csv2json(csvString)
-			console.log(candidates)
+			const admin = process.env.NEXT_PUBLIC_NEXT_PUBLIC_ADMIN_ID
 			
 			const candidatesData = candidates.map(candidate => {
 				return {
+					"admin":admin,
 					"cgpa": candidate?.cgpa?.toString(),
 					"college": candidate?.college,
 					"degree": candidate?.degree,
