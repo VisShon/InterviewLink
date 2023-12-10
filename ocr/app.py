@@ -61,7 +61,7 @@ def resumeOCR():
 
 
 # A simple function that takes single pdf files as form input, runs the extract_text function on it and returns the output as a json object 
-# curl -X POST -F 'file=@<path_to_file>' https://interviewlink-production.up.railway.app/resumetojson/
+# curl -X POST -F 'file=@<path_to_file>' http://localhost:8000/resumetojson/
 @app.post("/resumetojson/")
 def resumetojson():
     path = ""
@@ -84,7 +84,7 @@ def resumetojson():
 
 # A simple function that takes multiple pdf files as form input, runs the extract_text_multiple function on them and returns the output as a list 
 # the function must support multiple files as input
-# curl example : curl -X POST -F 'file=@<path_to_file>' -F 'file=@<path_to_file>' https://interviewlink-production.up.railway.app/resumetojsonmultiple/
+# curl example : curl -X POST -F 'file=@<path_to_file>' -F 'file=@<path_to_file>' http://localhost:8000/resumetojsonmultiple/
 @app.post("/resumetojsonmultiple/")
 def resumetojsonmultiple():
   files_paths  = []
